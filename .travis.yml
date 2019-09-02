@@ -10,12 +10,3 @@ deploy:
   provider: heroku
   api_key:
     secure: lFFq7SCu4+QQ5Bq2vvp3CXf7qkVucCMpsqURIJw3hw0g9KDSSicdI5CIi58G9BafedzgCaXtEpeGZGm6HL9S9beptiQK9dHC9ECiBQ9GrHB8qcIvBK5bKa4bKee8c56ApVA2/760QsZAMdJf6SR0mLHz8tNxKRM9oW8amfrW8rThhyiql+FnNNXcXJYLdfsp3tKHkt11UwmlVtCE483cLIarovp1qJF2Wumrso1n1xjOjn5446CWg17bTpKRUMByhTokV3s9VbQN8lSS2zqV8Tv0sJwFNIdnY2hv34lz5oV1vPqYPu5KNlMH8uqev/iPFvdUGp/Bo2XJWuh8/TvvuiROLufmWJGAvRxZQHjkKaYoviUGMMNmzdsa3s/AzrRcFRjmBpFSuKgzS2kKsoZ6fRnW6lKbUt7fWsiQbHebt7aD4mF3fjJbGhX+95gsek2DGD0z/cTqsXm1x8tywFK/DE3WSyOcctFxx6AUCGMTAwWD+PuIrZpqYewtxc22DfsiSsZAkxarGSZtL1N1ZQO1wUe6V23Pp9qL89/kyN39uTrSSsZPz5SRyg8yj4Jp5FY3oTAJLByypHgFntalr/FfjZldouCu9V2Lg5l4BDhNZ2yZKs5CRCaWKrvsjoyAIlnY1Z9Ak2wcUIqJMDMxu9xAyz+CZpVRJvoVJH/W0WdHEOE=
-app:
-    develop: lets-hang-be
-    master: lets-hang-be
-  on:
-    repo: lpile/lets-hang-be
-  run:
-    - "rails db:migrate"
-
-
