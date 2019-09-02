@@ -9,4 +9,8 @@ RSpec.describe User, type: :model do
     it { should validate_presence_of(:password) }
     it { should validate_presence_of(:phone_number) }
   end
+
+  describe 'relationships' do
+    it { should have_many(:events).through(:user_events) }
+  end
 end
