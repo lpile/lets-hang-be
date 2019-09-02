@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-SimpleCov.start 'rails'
-
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 
@@ -14,7 +12,9 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
- 
+
+SimpleCov.start 'rails'
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
