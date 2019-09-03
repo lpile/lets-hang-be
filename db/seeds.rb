@@ -1,9 +1,9 @@
 require 'factory_bot_rails'
 include FactoryBot::Syntax::Methods
 
+UserEvent.destroy_all
 User.destroy_all
 Event.destroy_all
-UserEvent.destroy_all
 
 user1, user2, user3 = create_list(:user, 3)
 
