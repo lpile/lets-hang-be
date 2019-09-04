@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  before_validation :create_api_key
+
   # Sets up relationship between user and event
   has_many :user_events
   has_many :events, through: :user_events
@@ -13,4 +15,10 @@ class User < ApplicationRecord
 
   # For Bcrypt to hash user's password
   has_secure_password
+
+  private
+
+  def create_api_key
+    self.api_key = SecureRandom.hex(10)
+  end
 end

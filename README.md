@@ -1,24 +1,48 @@
-# README
+### User Endpoints  
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#### Create a single user
+**Request:**
+```
+POST /api/v1/users
+Content-Type: application/json
+Accept: application/json
 
-Things you may want to cover:
+body:
+{
+  "first_name": "First Name",
+  "last_name": "Last Name",
+  "phone_number": "3033033030",
+  "email": "Name@email.com",
+  "password": "password",
+  "password_confirmation": "password"
+}
+```
+**Response:**
+```
+status: 201
+body:
+{
+  "data":
+  {
+    "type": "users",
+    "id": "1",
+    "attributes":
+    {
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "phone_number": "3033033030",
+      "email": "FirstLast@email.com",
+      "api_key": "asD7fsdfwef2332!%sdf"
+    }
+  }
+}
+```
+**Error:**
+```
+{
+  "error"=>"Failed to register"
+}
+```
+### Friendship Endpoints
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Event Endpoints
