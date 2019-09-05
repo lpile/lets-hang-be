@@ -50,6 +50,22 @@ describe 'User Update', type: :request do
     expect(result['error']).to eq('Failed to find user')
   end
 
+  it 'returns json error message if user cannot be updated' do
+    another_user = create(:user, email: 'taken@email.com')
+
+    # User trying to update email that is already in database
+    body = {'email': "#{another_user.email}", 'api_key': "#{user.api_key}"}
+
+    patch '/api/v1/user/edit', params: body.to_json, headers: content_type
+
+    expect(response).to have_http_status(422)
+
+    result = JSON.parse(response.body)
+
+    expect(result).to have_key('error')
+    expect(result['error']).to eq('Failed to update user')
+  end
+
   it 'returns json updated user information with only one updated attribute' do
     body = {'first_name': 'Update', 'api_key': "#{user.api_key}"}
 
