@@ -8,7 +8,6 @@ class Api::V1::EventsController < ApplicationController
     if user
       event = Event.new(event_params)
       event.creator = "#{user.first_name} #{user.last_name}"
-      # binding.pry
       if event.save
         render json: EventSerializer.new(event), status: 201
       else 
