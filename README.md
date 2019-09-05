@@ -49,7 +49,7 @@ body:
 #### Edit a single user
 **Request:**
 ```
-POST /api/v1/user/edit
+PATCH /api/v1/user/edit
 Content-Type: application/json
 Accept: application/json
 
