@@ -16,10 +16,12 @@ describe 'Event Index', type: :request do
     expect(result.first).to have_key('description')
     expect(result.first).to have_key('event_time')
     expect(result.first).to have_key('creator')
+    expect(result.first).to have_key('event_location')
     expect(result.last).to have_key('id')
     expect(result.last).to have_key('title')
     expect(result.last).to have_key('description')
     expect(result.last).to have_key('event_time')
     expect(result.last).to have_key('creator')
+    expect(result.last).to have_key('event_location')
   end
 end
