@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   # Validates model attributes
   validates :email, uniqueness: true, presence: true
-  validates_presence_of :password, :first_name, :last_name, :phone_number, require: true
+  validates_presence_of :first_name, :last_name, :phone_number, require: true
 
   # For Bcrypt to hash user's password
   has_secure_password

@@ -14,6 +14,9 @@ Rails.application.routes.draw do
 
       # User Login
       post '/sessions', to: 'sessions#create'
+
+      # Edit User
+      patch 'user/edit', to: 'users#update'
     end
   end
 end
