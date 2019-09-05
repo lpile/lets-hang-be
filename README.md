@@ -24,7 +24,7 @@ body:
 {
   "data":
   {
-    "type": "users",
+    "type": "user",
     "id": "1",
     "attributes":
     {
@@ -40,7 +40,47 @@ body:
 **Error:**
 ```
 {
-  "error"=>"Failed to register"
+  "error"=>"Failed to login"
+}
+```
+
+#### User login
+**Request:**
+```
+POST /api/v1/sessions
+Content-Type: application/json
+Accept: application/json
+
+body:
+{
+  "email": "Name@email.com",
+  "password": "password"
+}
+```
+**Response:**
+```
+status: 200
+body:
+{
+  "data":
+  {
+    "type": "user",
+    "id": "1",
+    "attributes":
+    {
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "phone_number": "3033033030",
+      "email": "FirstLast@email.com",
+      "api_key": "asD7fsdfwef2332!%sdf"
+    }
+  }
+}
+```
+**Error:**
+```
+{
+  "error"=>"Failed to login"
 }
 ```
 ### Friendship Endpoints
