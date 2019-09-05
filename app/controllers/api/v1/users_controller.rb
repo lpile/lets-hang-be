@@ -8,6 +8,16 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def update
+    user = User.find_by(api_key: params[:api_key])
+    if user
+      user.update(user_params)
+      render json: UserSerializer.new(user), status: 202
+    else
+      render json: { error: 'Failed to find user' }, status: 404
+    end
+  end
+
   private
 
   def user_params
