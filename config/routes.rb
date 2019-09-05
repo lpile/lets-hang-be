@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       # All events
-      resources :events, only: [:index]
+      resources :events, only: [:index, :create]
 
       # All users
       resources :users, only: [:create]
