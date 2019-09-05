@@ -87,7 +87,7 @@ body:
 
 ### Event Endpoints
 
-## Get all events for current user
+#### Get all events for current user
 
 **Request:**
 ```
@@ -151,24 +151,29 @@ body:
 ```
 
 **Error:**
-<!-- NEED TO ADD ERROR MESSAGE FOR UNSUCCESSFUL GET USER EVENTS GET -->
+```
+{
+  "error"=>"No events found"
+}
+```
 
-## Create a new event
+#### Create a new event
 
 **Request:**
 ```
-POST api/vi/events
+POST api/vi/events?api_key=kljh34!3hjh4
 
 Content-Type: application/json
 Accept: application/json
+
+Query Params: api_key (required)
 
 body:
 {
   "title": "Happy Hour",
   "description": "Meet after school at Brothers",
-  "event_time": "4:00PM",
-  "event_location": "Brothers",
-  "creator": "Mike Will"
+  "event_time": "2019-09-04T07:05:00.000Z",
+  "event_location": "Brothers"
 }
 ```
 **Response:**
@@ -176,5 +181,24 @@ body:
 status code: 201
 
 body: 
+{
+    "data": {
+        "id": "11",
+        "type": "event",
+        "attributes": {
+            "title": "Happy Hour",
+            "description": "Meet after school at Brothers",
+            "creator": "Mike Will",
+            "event_location": "Brothers",
+            "event_time": "01:05AM 09/04/19"
+        }
+    }
+}
 ```
-<!-- ADD BODY OF RESPONSE ONCE CONTROLLER COMPLETE -->
+
+**Error:**
+```
+{
+  "error"=>"Failed to create event"
+}
+```
