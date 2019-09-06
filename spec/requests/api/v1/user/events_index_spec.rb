@@ -17,7 +17,7 @@ describe 'User Events Index', type: :request do
     expect(response).to be_successful
 
     result = JSON.parse(response.body)
-
+    require "pry"; binding.pry
     # Checks response JSON API 1.0 Compliant
     expect(result).to have_key('data')
     expect(result['data']).to have_key('id')
