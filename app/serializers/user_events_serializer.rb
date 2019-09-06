@@ -6,7 +6,7 @@ class UserEventsSerializer
     object.events.map do |event|
       {"Title": event.title,
        "Description": event.description,
-       "Time": event.event_time,
+       "Time": Time.at(event.event_time).strftime('%I:%M%p %m/%d/%y'),
        "Location": event.event_location,
        "Creator": event.creator
       }
