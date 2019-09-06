@@ -4,8 +4,9 @@
 **Request:**
 ```
 POST /api/v1/users
-Content-Type: application/json
-Accept: application/json
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
 
 body:
 {
@@ -50,8 +51,9 @@ body:
 **Request:**
 ```
 PATCH /api/v1/user/edit
-Content-Type: application/json
-Accept: application/json
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
 
 body:
 {
@@ -107,8 +109,9 @@ body:
 **Request:**
 ```
 POST /api/v1/sessions
-Content-Type: application/json
-Accept: application/json
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
 
 body:
 {
@@ -144,122 +147,232 @@ body:
   "error"=>"Failed to login"
 }
 ```
-### Friendship Endpoints
 
-### Event Endpoints
-
-#### Get all events for current user
-
+#### Get all events for user
 **Request:**
 ```
-GET api/vi/events
+GET api/vi/events?api_key=asD7fsdfwef2332!%sdf
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
 
-Headers: 
-Content-Type: application/json
-Accept: application/json
-
-Query Params: api_key
+** Note: api_key query params is required **
 ```
 **Response:**
 ```
 status: 200
-body: 
+body:
 {
-    "data": {
-        "id": "4",
-        "type": "user",
-        "attributes": {
-            "events": [
-                {
-                    "Title": "Sour Ale",
-                    "Description": "Chuck Norris doesn't need a debugger, he just stares down the bug until the code confesses.",
-                    "Time": "2019-09-04T07:05:00.000Z",
-                    "Location": null,
-                    "Creator": "Mike Will"
-                },
-                {
-                    "Title": "Stout",
-                    "Description": "All browsers support the hex definitions #chuck and #norris for the colors black and blue.",
-                    "Time": "2019-09-03T23:16:00.000Z",
-                    "Location": null,
-                    "Creator": "Mike Will"
-                },
-                {
-                    "Title": "Wood-aged Beer",
-                    "Description": "Chuck Norris' beard is immutable.",
-                    "Time": "2019-09-04T10:04:00.000Z",
-                    "Location": null,
-                    "Creator": "Mike Will"
-                },
-                {
-                    "Title": "Strong Ale",
-                    "Description": "No statement can catch the ChuckNorrisException.",
-                    "Time": "2019-09-04T07:30:00.000Z",
-                    "Location": null,
-                    "Creator": "Isidro Boehm"
-                },
-                {
-                    "Title": "Scottish And Irish Ale",
-                    "Description": "When a bug sees Chuck Norris, it flees screaming in terror, and then immediately self-destructs to avoid being roundhouse-kicked.",
-                    "Time": "2019-09-04T12:04:00.000Z",
-                    "Location": null,
-                    "Creator": "Thanh O'Conner"
-                }
-            ]
+  "data": {
+    "id": "4",
+    "type": "user",
+    "attributes": {
+      "events": [
+        {
+          "Title": "Sour Ale",
+          "Description": "Chuck Norris doesn't need a debugger, he just stares down the bug until the code confesses.",
+          "Time": "2019-09-04T07:05:00.000Z",
+          "Location": "Denver,CO",
+          "Creator": "Mike Will"
+        },
+        {
+          "Title": "Stout",
+          "Description": "All browsers support the hex definitions #chuck and #norris for the colors black and blue.",
+          "Time": "2019-09-03T23:16:00.000Z",
+          "Location": "Denver,CO",
+          "Creator": "Mike Will"
+        },
+        {
+          "Title": "Wood-aged Beer",
+          "Description": "Chuck Norris' beard is immutable.",
+          "Time": "2019-09-04T10:04:00.000Z",
+          "Location": "Denver,CO",
+          "Creator": "Mike Will"
+        },
+        {
+          "Title": "Strong Ale",
+          "Description": "No statement can catch the ChuckNorrisException.",
+          "Time": "2019-09-04T07:30:00.000Z",
+          "Location": "Denver,CO",
+          "Creator": "Isidro Boehm"
+        },
+        {
+          "Title": "Scottish And Irish Ale",
+          "Description": "When a bug sees Chuck Norris, it flees screaming in terror, and then immediately self-destructs to avoid being roundhouse-kicked.",
+          "Time": "2019-09-04T12:04:00.000Z",
+          "Location": "Denver,CO",
+          "Creator": "Thanh O'Conner"
         }
+      ]
     }
+  }
 }
 ```
 
 **Error:**
 ```
+status: 404
+body:
 {
   "error"=>"No events found"
 }
 ```
 
-#### Create a new event
+### Friendship Endpoints
 
+### Event Endpoints
+
+#### Create a new event
 **Request:**
 ```
-POST api/vi/events?api_key=kljh34!3hjh4
-
-Content-Type: application/json
-Accept: application/json
-
-Query Params: api_key (required)
+POST api/vi/events
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
 
 body:
 {
   "title": "Happy Hour",
   "description": "Meet after school at Brothers",
   "event_time": "2019-09-04T07:05:00.000Z",
-  "event_location": "Brothers"
+  "event_location": "Brothers",
+  "api_key": "asD7fsdfwef2332!%sdf"
 }
 ```
 **Response:**
 ```
-status code: 201
-
-body: 
+status: 201
+body:
 {
-    "data": {
-        "id": "11",
-        "type": "event",
-        "attributes": {
-            "title": "Happy Hour",
-            "description": "Meet after school at Brothers",
-            "creator": "Mike Will",
-            "event_location": "Brothers",
-            "event_time": "01:05AM 09/04/19"
-        }
+  "data": {
+    "id": "11",
+    "type": "event",
+    "attributes": {
+      "title": "Happy Hour",
+      "description": "Meet after school at Brothers",
+      "creator": "Mike Will",
+      "event_location": "Brothers",
+      "event_time": "01:05AM 09/04/19"
     }
+  }
+}
+```
+**Error:**
+```
+status: 422
+body:
+{
+  "error"=>"Failed to create event"
 }
 ```
 
-**Error:**
+#### Get an event
+**Request:**
 ```
+GET api/vi/events/:event_id?api_key=asD7fsdfwef2332!%sdf
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+
+** Note: api_key query params is required **
+```
+**Response:**
+```
+status: 200
+body:
 {
-  "error"=>"Failed to create event"
+  "data": {
+    "id": "1",
+    "type": "event",
+    "attributes": {
+      "title": "India Pale Ale",
+      "description": "The only pattern Chuck Norris knows is God Object.",
+      "creator": "Shirlee Rice",
+      "event_location": "Arrogant Bastard Ale",
+      "event_time": "07:57AM 09/04/19",
+      "attendees": [
+        "Shirlee Rice",
+        "Ervin Gutmann",
+        "Sergio Metz"
+      ]
+    }
+  }
+}
+```
+**Errors:**
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find user"
+}
+```
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find event"
+}
+```
+```
+status: 401
+body:
+{
+  "error"=>"Unauthorized user"
+}
+```
+
+#### Get all events
+**Request:**
+```
+GET api/vi/events
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+```
+**Response:**
+```
+status: 200
+body:
+{
+  "data":
+  [
+    {
+      "id": "7",
+      "type": "event",
+      "attributes":
+      {
+        "title": "Strong Ale",
+        "description": "Chuck Norris went out of an infinite loop.",
+        "creator": "Ramon Leuschke",
+        "event_location": "Samuel Smith’s Imperial IPA",
+        "event_time": "04:25PM 09/04/19"
+      }
+    },
+    {
+      "id": "8",
+      "type": "event",
+      "attributes":
+      {
+        "title": "India Pale Ale",
+        "description": "Chuck Norris knows the last digit of PI.",
+        "creator": "Ramon Leuschke",
+        "event_location": "Ten FIDY",
+        "event_time": "07:11AM 09/05/19"
+      }
+    },
+    {
+      "id": "9",
+      "type": "event",
+      "attributes":
+      {
+        "title": "Strong Ale",
+        "description": "Chuck Norris is immutable. If something's going to change, it's going to have to be the rest of the universe.",
+        "creator": "Ramon Leuschke",
+        "event_location": "Maharaj",
+        "event_time": "01:31PM 09/05/19"
+      }
+    }
+  ]
 }
 ```
