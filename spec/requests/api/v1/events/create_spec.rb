@@ -6,7 +6,7 @@ describe 'Event Create', type: :request do
   let(:user) { User.create!(first_name: 'First', last_name: 'Last', phone_number: '3033033030', email: 'test@email.com', password: 'password', password_confirmation: 'password') }
   let(:event) { {'title': 'Happy Hour', 'description': 'Meet after school at Brothers', 'event_time': DateTime.current, 'event_location': 'Brothers', 'api_key': "#{user.api_key}"} }
   let(:error_event1) { {'title': 'Happy Hour', 'event_time': DateTime.current, 'event_location': 'Brothers', 'api_key': "#{user.api_key}"} }
-  let(:error_event2) { {'title': 'Happy Hour', 'description': 'Meet after school at Brothers', 'event_time': DateTime.current, 'event_location': 'Brothers', 'api_key': "123der59jjhk"} }
+  let(:error_event2) { {'title': 'Happy Hour', 'description': 'Meet after school at Brothers', 'event_time': DateTime.current, 'event_location': 'Brothers', 'api_key': '123der59jjhk'} }
 
   it 'returns json event object upon creating an event' do
     post '/api/v1/events', params: event.to_json, headers: content_type
@@ -30,8 +30,8 @@ describe 'Event Create', type: :request do
     expect(result['data']['attributes']['description']).to eq(event_output.description)
     expect(result['data']['attributes']['event_time']).to eq(Time.at(event_output.event_time).strftime('%I:%M%p %m/%d/%y'))
     expect(result['data']['attributes']['event_location']).to eq(event_output.event_location)
-    expect(result["data"]["attributes"]["creator"]).to eq(event_output.creator)
-    expect(result["data"]["attributes"]["attendees"].count).to eq(1)
+    expect(result['data']['attributes']['creator']).to eq(event_output.creator)
+    expect(result['data']['attributes']['attendees'].count).to eq(1)
     # Checks if new event was successful added to Event table
     expect(event_output.title).to eq(event[:title])
     expect(event_output.description).to eq(event[:description])
