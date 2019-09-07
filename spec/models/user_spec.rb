@@ -45,5 +45,20 @@ RSpec.describe User, type: :model do
         expect(Friendship.count).to eq(0)
       end
     end
+
+    describe 'accept_request(friend)' do
+      it 'can change relationships in friendships table with correct status' do
+        user1.friend_request(user2)
+        user2.accept_request(user1)
+
+        expect(Friendship.count).to eq(2)
+
+        friendship_row1 = Friendship.first
+        friendship_row2 = Friendship.last
+
+        expect(friendship_row1.status).to eq('accepted')
+        expect(friendship_row2.status).to eq('accepted')
+      end
+    end
   end
 end

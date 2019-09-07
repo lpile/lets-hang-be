@@ -28,6 +28,13 @@ class User < ApplicationRecord
     end
   end
 
+  def accept_request(friend)
+    transaction do
+      Friendship.find_by(user: self, friend: friend, status: [:requested])&.accepted!
+      Friendship.find_by(user: friend, friend: self, status: [:pending])&.accepted!
+    end
+  end
+
   private
 
   def create_api_key
