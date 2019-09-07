@@ -7,8 +7,8 @@ describe 'Event Update', type: :request do
   
   it 'returns json updated event information' do
     body = {'title': 'Update', 'description': 'Update', 'event_time': DateTime.current, 'event_location': 'Update', 'api_key': "#{user1.api_key}"}
-
-    patch '/api/v1/events/:id', params: body.to_json, headers: content_type
+    id = event.id
+    patch "/api/v1/events/#{id}/edit", params: body.to_json, headers: content_type
 
     expect(response).to be_successful
     expect(response).to have_http_status(202)
@@ -42,7 +42,7 @@ describe 'Event Update', type: :request do
     body = {'title': 'Update', 'description': 'Update', 'event_time': DateTime.current, 'event_location': 'Update', 'api_key': "LKhd345!?ksdET"}
     id = event.id
 
-    patch "/api/v1/events/#{id}", params: body.to_json, headers: content_type
+    patch "/api/v1/events/#{id}/edit", params: body.to_json, headers: content_type
 
     expect(response).to have_http_status(404)
 
@@ -52,25 +52,7 @@ describe 'Event Update', type: :request do
     expect(result['error']).to eq('Failed to find user')
   end
 
-
-  it 'returns json error message if event cannot be found' do
- 
-    # User trying to update event that cannot be found
-    body = {'title': 'Update', 'description': 'Update', 'event_time': DateTime.current, 'event_location': 'Update', 'api_key': "#{user1.api_key}"}
-
-    # Bad id passed in the path
-    patch '/api/v1/events/A1', params: body.to_json, headers: content_type
-
-    expect(response).to have_http_status(404)
-
-    result = JSON.parse(response.body)
-
-    expect(result).to have_key('error')
-    expect(result['error']).to eq('Failed to find event')
-  end
-
   it 'returns json error message if event cannot be updated' do
-    
     # User trying to update an event they did not create
     another_user = create(:user, first_name: 'Someone', last_name: 'Else') 
     event2 = create(:event, creator: "#{another_user.first_name} #{another_user.last_name}") 
@@ -78,7 +60,7 @@ describe 'Event Update', type: :request do
 
     body = {'title': 'Update', 'description': 'Update', 'event_time': DateTime.current, 'event_location': 'Update', 'api_key': "#{user1.api_key}"}
 
-    patch "/api/v1/events/#{id}", params: body.to_json, headers: content_type
+    patch "/api/v1/events/#{id}/edit", params: body.to_json, headers: content_type
 
     expect(response).to have_http_status(422)
 
@@ -92,7 +74,7 @@ describe 'Event Update', type: :request do
     body = {'title': 'Update', 'api_key': "#{user1.api_key}"}
     id = event.id
 
-    patch "/api/v1/events/#{id}", params: body.to_json, headers: content_type
+    patch "/api/v1/events/#{id}/edit", params: body.to_json, headers: content_type
 
     expect(response).to be_successful
     expect(response).to have_http_status(202)

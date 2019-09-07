@@ -37,6 +37,21 @@ class Api::V1::EventsController < ApplicationController
     end
   end
 
+  def update
+    user = User.find_by(api_key: params[:api_key])
+    if user
+      event = Event.find_by(id: params[:id])
+      if event && event.creator == "#{user.first_name} #{user.last_name}"
+          event.update(event_params)
+            render json: EventSerializer.new(event), status: 202
+      else 
+        render json: { error: 'Failed to update event' }, status: 422
+      end
+    else
+      render json: { error: 'Failed to find user' }, status: 404
+    end
+  end
+
   private
 
   def event_params
