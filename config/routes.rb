@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       # Adding/Updating UserEvents upon inviting and accepting
       namespace :event do
         post '/invite/:friend_id', to: 'invite#create'
+        patch '/accept/:user_id', to 'invite#update'
+        delete '/decline/:user_id', to 'invite#destroy'
       end
 
       # User Login
