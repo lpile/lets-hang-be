@@ -4,7 +4,7 @@ describe 'Event Update', type: :request do
   let(:content_type) { {'Content-Type': 'application/json', 'Accept': 'application/json'} }
   let(:user1) { User.create!(first_name: 'First', last_name: 'Last', phone_number: '3033033030', email: 'test@email.com', password: 'password', password_confirmation: 'password') }
   let(:event) { create(:event, creator: "#{user1.first_name} #{user1.last_name}") }
-
+  
   it 'returns json updated event information' do
     body = {'title': 'Update', 'description': 'Update', 'event_time': DateTime.current, 'event_location': 'Update', 'api_key': "#{user1.api_key}"}
 
@@ -38,10 +38,11 @@ describe 'Event Update', type: :request do
   end
 
   it 'returns json error message if user cannot be found' do
-
+    # binding.pry
     body = {'title': 'Update', 'description': 'Update', 'event_time': DateTime.current, 'event_location': 'Update', 'api_key': "LKhd345!?ksdET"}
+    id = event.id
 
-    patch "/api/v1/events/#{:event.id}", params: body.to_json, headers: content_type
+    patch "/api/v1/events/#{id}", params: body.to_json, headers: content_type
 
     expect(response).to have_http_status(404)
 
@@ -68,15 +69,16 @@ describe 'Event Update', type: :request do
     expect(result['error']).to eq('Failed to find event')
   end
 
-  # DOUBLE CHECK THIS IS NOT ALREADY COVERED?
   it 'returns json error message if event cannot be updated' do
- 
-    # User trying to update an event they didn't create(?)
-    let(:another_user) { create(:user, first_name: 'Someone', last_name: 'Else') }
-    let(:event2) { create(:event, creator: "#{another_user.first_name} #{another_user.last_name}") }
+    
+    # User trying to update an event they did not create
+    another_user = create(:user, first_name: 'Someone', last_name: 'Else') 
+    event2 = create(:event, creator: "#{another_user.first_name} #{another_user.last_name}") 
+    id = event2.id
+
     body = {'title': 'Update', 'description': 'Update', 'event_time': DateTime.current, 'event_location': 'Update', 'api_key': "#{user1.api_key}"}
 
-    patch "/api/v1/events/#{event2.id}", params: body.to_json, headers: content_type
+    patch "/api/v1/events/#{id}", params: body.to_json, headers: content_type
 
     expect(response).to have_http_status(422)
 
@@ -88,8 +90,9 @@ describe 'Event Update', type: :request do
 
   it 'returns json updated event information with only one updated attribute' do
     body = {'title': 'Update', 'api_key': "#{user1.api_key}"}
+    id = event.id
 
-    patch "/api/v1/events/#{event.id}", params: body.to_json, headers: content_type
+    patch "/api/v1/events/#{id}", params: body.to_json, headers: content_type
 
     expect(response).to be_successful
     expect(response).to have_http_status(202)
