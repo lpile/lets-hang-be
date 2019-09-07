@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       # All friendships
       namespace :friendships do
         post '/request/:friend_id', to: 'request#create'
+        delete '/decline/:request_id', to: 'request#destroy'
       end
 
       # Specific User
