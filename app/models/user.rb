@@ -19,6 +19,15 @@ class User < ApplicationRecord
   # For Bcrypt to hash user's password
   has_secure_password
 
+  def friend_request(friend)
+    unless self == friend || Friendship.where(user: self, friend: friend).exists?
+      transaction do
+        Friendship.create(user: self, friend: friend, status: :pending)
+        Friendship.create(user: friend, friend: self, status: :requested)
+      end
+    end
+  end
+
   private
 
   def create_api_key
