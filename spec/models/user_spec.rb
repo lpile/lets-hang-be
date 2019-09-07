@@ -60,5 +60,14 @@ RSpec.describe User, type: :model do
         expect(friendship_row2.status).to eq('accepted')
       end
     end
+
+    describe 'reject_request(friend)' do
+      it 'can remove relationships in friendships table' do
+        user1.friend_request(user2)
+        user2.reject_request(user1)
+
+        expect(Friendship.count).to eq(0)
+      end
+    end
   end
 end
