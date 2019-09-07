@@ -7,6 +7,11 @@ Rails.application.routes.draw do
       # All users
       resources :users, only: [:create]
 
+      # All friendships
+      namespace :friendships do
+        post '/request/:friend_id', to: 'request#create'
+      end
+
       # Specific User
       namespace :user do
         resources :events, only: [:index]
