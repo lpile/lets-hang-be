@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       resources :events, only: [:index, :show, :create]
 
       # Update an event
-      patch 'events/:id', to 'events#update'
+      patch 'events/:id/edit', to: 'events#update'
 
       # All users
       resources :users, only: [:create]
