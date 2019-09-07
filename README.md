@@ -322,6 +322,58 @@ body:
 }
 ```
 
+#### Update an event
+**Request:**
+```
+PATCH api/vi/events/:id/edit
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+
+body:
+{
+  "title": "Upated Happy Hour",
+  "description": "Meet after school at Brothers",
+  "event_time": "2019-09-04T07:05:00.000Z",
+  "event_location": "Brothers",
+  "api_key": "asD7fsdfwef2332!%sdf"
+}
+```
+**Response:**
+```
+status: 202
+body:
+{
+  "data": {
+    "id": "11",
+    "type": "event",
+    "attributes": {
+      "title": "Updated Happy Hour",
+      "description": "Meet after school at Brothers",
+      "creator": "Mike Will",
+      "event_location": "Brothers",
+      "event_time": "01:05AM 09/04/19"
+    }
+  }
+}
+```
+**Error:**
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find user"
+}
+```
+
+```
+status: 422
+body:
+{
+  "error"=>"Failed to update event"
+}
+```
+
 #### Get all events
 **Request:**
 ```
