@@ -16,6 +16,11 @@ Rails.application.routes.draw do
       end
       patch 'user/edit', to: 'users#update'
 
+      # Adding/Updating UserEvents upon inviting and accepting
+      namespace :event do
+        post '/invite/:friend_id', to: 'invite#create'
+      end
+
       # User Login
       post '/sessions', to: 'sessions#create'
     end
