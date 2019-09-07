@@ -13,6 +13,9 @@ RSpec.describe User, type: :model do
   describe 'relationships' do
     it { should have_many(:events).through(:user_events) }
     it { should have_many(:friendships) }
-    it { should have_many(:inverse_friendships) }
+    it { should have_many(:friends).through(:friendships) }
+    it { should have_many(:requested_friends).through(:friendships) }
+    it { should have_many(:pending_friends).through(:friendships) }
+    it { should have_many(:blocked_friends).through(:friendships) }
   end
 end
