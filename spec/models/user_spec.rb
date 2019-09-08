@@ -16,7 +16,6 @@ RSpec.describe User, type: :model do
     it { should have_many(:friends).through(:friendships) }
     it { should have_many(:requested_friends).through(:friendships) }
     it { should have_many(:pending_friends).through(:friendships) }
-    it { should have_many(:blocked_friends).through(:friendships) }
   end
 
   describe 'instance methods' do
@@ -61,10 +60,10 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe 'reject_request(friend)' do
+    describe 'remove_friend(friend)' do
       it 'can remove relationships in friendships table' do
         user1.friend_request(user2)
-        user2.reject_request(user1)
+        user2.remove_friend(user1)
 
         expect(Friendship.count).to eq(0)
       end

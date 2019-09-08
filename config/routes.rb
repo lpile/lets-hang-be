@@ -2,24 +2,19 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       # All events
-      resources :events, only: [:index, :show, :create]
-
-      # Update an event
-      patch 'events/:id/edit', to: 'events#update'
+      resources :events, only: [:show, :create, :update]
 
       # All users
-      resources :users, only: [:create]
+      resources :users, only: [:create, :update]
 
       # All friendships
-      namespace :friendships do
-        post '/request/:friend_id', to: 'request#create'
-      end
+      resources :friendships, only: [:create, :update, :destroy]
 
       # Specific User
       namespace :user do
         resources :events, only: [:index]
+        resources :friends, only: [:index]
       end
-      patch 'user/edit', to: 'users#update'
 
       # User Login
       post '/sessions', to: 'sessions#create'

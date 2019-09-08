@@ -6,10 +6,9 @@ describe 'User Create', type: :request do
   let(:user) { {'first_name': 'First Name', 'last_name': 'Last Name', 'phone_number': '3033033030', 'email': 'FirstLast@email.com', 'password': 'password', 'password_confirmation': 'password'} }
   let(:error_user) { {'last_name': 'Last Name', 'phone_number': '3033033030', 'email': 'FirstLast@email.com', 'password': 'password', 'password_confirmation': 'password'} }
 
-  it 'returns json api key to user for registering' do
+  it 'returns json information of user when registering' do
     post '/api/v1/users', params: user.to_json, headers: content_type
 
-    expect(response).to be_successful
     expect(response).to have_http_status(:created)
 
     result = JSON.parse(response.body)
