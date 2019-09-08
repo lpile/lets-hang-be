@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       namespace :user do
         resources :events, only: [:index]
         resources :friends, only: [:index]
+        resources :pending_friends, only: [:index]
       end
 
       # User Login
