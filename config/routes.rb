@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         resources :events, only: [:index]
         resources :friends, only: [:index]
         resources :pending_friends, only: [:index]
+        resources :requested_friends, only: [:index]
       end
 
       # User Login
