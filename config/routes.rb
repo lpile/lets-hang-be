@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       # Specific User
       namespace :user do
         resources :events, only: [:index]
+        resources :friends, only: [:index]
       end
       patch 'user/edit', to: 'users#update'
 
