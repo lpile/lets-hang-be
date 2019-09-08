@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       patch 'events/:id/edit', to: 'events#update'
 
       # All users
-      resources :users, only: [:create]
+      resources :users, only: [:create, :update]
 
       # All friendships
       resources :friendships, only: [:create, :update, :destroy]
@@ -18,7 +18,6 @@ Rails.application.routes.draw do
         resources :events, only: [:index]
         resources :friends, only: [:index]
       end
-      patch 'user/edit', to: 'users#update'
 
       # User Login
       post '/sessions', to: 'sessions#create'
