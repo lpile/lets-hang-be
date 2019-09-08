@@ -1,6 +1,5 @@
-### User Endpoints  
-
-#### Create a single user
+## Users Endpoints  
+#### Create a user
 **Request:**
 ```
 POST /api/v1/users
@@ -47,10 +46,10 @@ body:
 }
 ```
 
-#### Edit a single user
+#### Edit a user
 **Request:**
 ```
-PATCH /api/v1/user/edit
+PATCH /api/v1/users/:id
 Headers:
 {Content-Type: application/json,
 Accept: application/json}
@@ -60,8 +59,7 @@ body:
   "first_name": "Update Name",
   "last_name": "Update Name",
   "phone_number": "3333333333",
-  "email": "Update@email.com",
-  "api_key": "asD7fsdfwef2332!%sdf"
+  "email": "Update@email.com"
 }
 
 ** Note: At least one field is required **
@@ -151,7 +149,7 @@ body:
 #### Get all events for user
 **Request:**
 ```
-GET api/vi/events?api_key=asD7fsdfwef2332!%sdf
+GET api/vi/user/events?api_key=asD7fsdfwef2332!%sdf
 Headers:
 {Content-Type: application/json,
 Accept: application/json}
@@ -214,18 +212,73 @@ body:
 status: 404
 body:
 {
-  "error"=>"No events found"
+  "error"=>"Failed to find user"
 }
 ```
 
-### Friendship Endpoints
+#### Get all friends for user
+**Request:**
+```
+GET api/vi/user/friends?api_key=asD7fsdfwef2332!%sdf
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
 
-### Event Endpoints
+** Note: api_key query params is required **
+```
+**Response:**
+```
+status: 200
+{
+  "data": {
+    "id": "1",
+    "type": "user",
+    "attributes": {
+      "friends": [
+        {
+          "id": 2,
+          "Name": "Abe Kshlerin",
+          "Phone Number": "134.404.9791",
+          "Email": "danette_roob@example.com"
+        },
+        {
+          "id": 3,
+          "Name": "Jamey Conroy",
+          "Phone Number": "238-280-5410",
+          "Email": "terrance@example.com"
+        },
+        {
+          "id": 4,
+          "Name": "Quintin Cruickshank",
+          "Phone Number": "995.678.9202",
+          "Email": "bobbi_hodkiewicz@example.com"
+        },
+        {
+          "id": 5,
+          "Name": "Billie Spinka",
+          "Phone Number": "(833) 493-9944",
+          "Email": "saundra.strosin@example.net"
+        }
+      ]
+    }
+  }
+}
+```
 
+**Error:**
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find user"
+}
+```
+
+## Event Endpoints
 #### Create a new event
 **Request:**
 ```
-POST api/vi/events
+POST /api/v1/events?api_key=asd!4gs?kSD
 Headers:
 {Content-Type: application/json,
 Accept: application/json}
@@ -235,8 +288,7 @@ body:
   "title": "Happy Hour",
   "description": "Meet after school at Brothers",
   "event_time": "2019-09-04T07:05:00.000Z",
-  "event_location": "Brothers",
-  "api_key": "asD7fsdfwef2332!%sdf"
+  "event_location": "Brothers"
 }
 ```
 **Response:**
@@ -257,7 +309,14 @@ body:
   }
 }
 ```
-**Error:**
+**Errors:**
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find user"
+}
+```
 ```
 status: 422
 body:
@@ -314,18 +373,11 @@ body:
   "error"=>"Failed to find event"
 }
 ```
-```
-status: 401
-body:
-{
-  "error"=>"Unauthorized user"
-}
-```
 
 #### Update an event
 **Request:**
 ```
-PATCH api/vi/events/:id/edit
+PATCH api/vi/events/:id?api_key=asd!4gs?kSD
 Headers:
 {Content-Type: application/json,
 Accept: application/json}
@@ -335,8 +387,7 @@ body:
   "title": "Upated Happy Hour",
   "description": "Meet after school at Brothers",
   "event_time": "2019-09-04T07:05:00.000Z",
-  "event_location": "Brothers",
-  "api_key": "asD7fsdfwef2332!%sdf"
+  "event_location": "Brothers"
 }
 ```
 **Response:**
@@ -357,7 +408,7 @@ body:
   }
 }
 ```
-**Error:**
+**Errors:**
 ```
 status: 404
 body:
@@ -374,10 +425,11 @@ body:
 }
 ```
 
-#### Get all events
+## Friendship Endpoints
+#### Friend request
 **Request:**
 ```
-GET api/vi/events
+POST /api/v1/friendships?api_key=<USER_API_KEY>&friend_id=<FRIEND_USER_ID>
 Headers:
 {Content-Type: application/json,
 Accept: application/json}
@@ -387,44 +439,109 @@ Accept: application/json}
 status: 200
 body:
 {
-  "data":
-  [
-    {
-      "id": "7",
-      "type": "event",
-      "attributes":
-      {
-        "title": "Strong Ale",
-        "description": "Chuck Norris went out of an infinite loop.",
-        "creator": "Ramon Leuschke",
-        "event_location": "Samuel Smith’s Imperial IPA",
-        "event_time": "04:25PM 09/04/19"
-      }
-    },
-    {
-      "id": "8",
-      "type": "event",
-      "attributes":
-      {
-        "title": "India Pale Ale",
-        "description": "Chuck Norris knows the last digit of PI.",
-        "creator": "Ramon Leuschke",
-        "event_location": "Ten FIDY",
-        "event_time": "07:11AM 09/05/19"
-      }
-    },
-    {
-      "id": "9",
-      "type": "event",
-      "attributes":
-      {
-        "title": "Strong Ale",
-        "description": "Chuck Norris is immutable. If something's going to change, it's going to have to be the rest of the universe.",
-        "creator": "Ramon Leuschke",
-        "event_location": "Maharaj",
-        "event_time": "01:31PM 09/05/19"
+  "data": {
+    "id": "13",
+    "type": "request",
+    "attributes": {
+      "requester": {
+        "id": 3,
+        "name": "Jamey Conroy",
+        "status": "pending"
+      },
+      "requestee": {
+        "id": 2,
+        "name": "Abe Kshlerin",
+        "status": "requested"
       }
     }
-  ]
+  }
+}
+```
+**Errors:**
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find user"
+}
+```
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find friend"
+}
+```
+#### Accept friend request
+**Request:**
+```
+PATCH /api/v1/friendships/<REQUESTER_USER_ID>?api_key=<USER_API_KEY>
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+```
+**Response:**
+```
+status: 200
+body:
+{
+  "data": {
+    "id": "14",
+    "type": "accept",
+    "attributes": {
+      "requester": {
+        "id": 3,
+        "name": "Jamey Conroy",
+        "status": "accepted"
+      },
+      "requestee": {
+        "id": 2,
+        "name": "Abe Kshlerin",
+        "status": "accepted"
+      }
+    }
+  }
+}
+```
+**Errors:**
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find user"
+}
+```
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find requesting friend"
+}
+```
+#### Decline friend request / remove friend
+**Request:**
+```
+DELETE /api/v1/friendships/<REMOVE_USER_ID>?api_key=<USER_API_KEY>
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+```
+**Response:**
+```
+status: 204
+```
+**Errors:**
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find user"
+}
+```
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find requesting friend"
 }
 ```

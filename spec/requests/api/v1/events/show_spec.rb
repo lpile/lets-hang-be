@@ -74,17 +74,4 @@ describe 'Events Show', type: :request do
     expect(result).to have_key('error')
     expect(result['error']).to eq('Failed to find event')
   end
-
-  it 'returns json error message if user tries to look into an event not associated with' do
-    UserEvent.create!(user: user1, event: event)
-
-    get "/api/v1/events/#{event.id}?api_key=#{user2.api_key}", headers: content_type
-
-    expect(response).to have_http_status(401)
-
-    result = JSON.parse(response.body)
-
-    expect(result).to have_key('error')
-    expect(result['error']).to eq('Unauthorized user')
-  end
 end

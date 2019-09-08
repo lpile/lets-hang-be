@@ -1,18 +1,10 @@
 class Api::V1::EventsController < ApplicationController
-  def index
-    render json: AllEventsSerializer.new(Event.all), status: 200
-  end
-
   def show
     user = User.find_by(api_key: params[:api_key])
     if user
       event = Event.find_by(id: params[:id])
-      if event
-        if event.creator == "#{user.first_name} #{user.last_name}"
-          render json: EventSerializer.new(event), status: 200
-        else
-          render json: { error: 'Unauthorized user' }, status: 401
-        end
+      if event && event.creator == "#{user.first_name} #{user.last_name}"
+        render json: EventSerializer.new(event), status: 200
       else
         render json: { error: 'Failed to find event' }, status: 404
       end
@@ -43,8 +35,8 @@ class Api::V1::EventsController < ApplicationController
       event = Event.find_by(id: params[:id])
       if event && event.creator == "#{user.first_name} #{user.last_name}"
           event.update(event_params)
-            render json: EventSerializer.new(event), status: 202
-      else 
+          render json: EventSerializer.new(event), status: 202
+      else
         render json: { error: 'Failed to update event' }, status: 422
       end
     else

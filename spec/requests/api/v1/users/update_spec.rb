@@ -3,14 +3,13 @@ require 'rails_helper'
 describe 'User Update', type: :request do
 
   let(:content_type) { {'Content-Type': 'application/json', 'Accept': 'application/json'} }
-  let(:user) { User.create!(first_name: 'First', last_name: 'Last', phone_number: '3033033030', email: 'test@email.com', password: 'password', password_confirmation: 'password') }
+  let(:user) { create(:user) }
 
   it 'returns json updated user information' do
-    body = {'first_name': 'Update', 'last_name': 'Update', 'phone_number': '9999999999', 'email': 'update@email.com', 'api_key': "#{user.api_key}"}
+    body = {'first_name': 'Update', 'last_name': 'Update', 'phone_number': '9999999999', 'email': 'update@email.com'}
 
-    patch '/api/v1/user/edit', params: body.to_json, headers: content_type
+    patch "/api/v1/users/#{user.id}", params: body.to_json, headers: content_type
 
-    expect(response).to be_successful
     expect(response).to have_http_status(202)
 
     result = JSON.parse(response.body)
@@ -38,9 +37,9 @@ describe 'User Update', type: :request do
   end
 
   it 'returns json error message if user cannot be found' do
-    body = {'first_name': 'Update', 'last_name': 'Update', 'phone_number': '9999999999', 'email': 'update@email.com', 'api_key': 'LKhd345!?ksdET'}
+    body = {'first_name': 'Update', 'last_name': 'Update', 'phone_number': '9999999999', 'email': 'update@email.com'}
 
-    patch '/api/v1/user/edit', params: body.to_json, headers: content_type
+    patch '/api/v1/users/3', params: body.to_json, headers: content_type
 
     expect(response).to have_http_status(404)
 
@@ -51,12 +50,12 @@ describe 'User Update', type: :request do
   end
 
   it 'returns json error message if user cannot be updated' do
-    another_user = create(:user, email: 'taken@email.com')
+    another_user = create(:user)
 
     # User trying to update email that is already in database
-    body = {'email': "#{another_user.email}", 'api_key': "#{user.api_key}"}
+    body = {'email': "#{another_user.email}"}
 
-    patch '/api/v1/user/edit', params: body.to_json, headers: content_type
+    patch "/api/v1/users/#{user.id}", params: body.to_json, headers: content_type
 
     expect(response).to have_http_status(422)
 
@@ -67,11 +66,10 @@ describe 'User Update', type: :request do
   end
 
   it 'returns json updated user information with only one updated attribute' do
-    body = {'first_name': 'Update', 'api_key': "#{user.api_key}"}
+    body = {'first_name': 'Update'}
 
-    patch '/api/v1/user/edit', params: body.to_json, headers: content_type
+    patch "/api/v1/users/#{user.id}", params: body.to_json, headers: content_type
 
-    expect(response).to be_successful
     expect(response).to have_http_status(202)
 
     result = JSON.parse(response.body)

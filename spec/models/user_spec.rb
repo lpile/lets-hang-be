@@ -13,6 +13,60 @@ RSpec.describe User, type: :model do
   describe 'relationships' do
     it { should have_many(:events).through(:user_events) }
     it { should have_many(:friendships) }
-    it { should have_many(:inverse_friendships) }
+    it { should have_many(:friends).through(:friendships) }
+    it { should have_many(:requested_friends).through(:friendships) }
+    it { should have_many(:pending_friends).through(:friendships) }
+  end
+
+  describe 'instance methods' do
+
+    let(:user1) { create(:user) }
+    let(:user2) { create(:user) }
+
+    describe 'friend_request(friend)' do
+      it 'can add both relationships to friendships table with correct status' do
+        expect(Friendship.count).to eq(0)
+
+        user1.friend_request(user2)
+
+        expect(Friendship.count).to eq(2)
+
+        friendship_row1 = Friendship.first
+        friendship_row2 = Friendship.last
+
+        expect(friendship_row1.status).to eq('pending')
+        expect(friendship_row2.status).to eq('requested')
+      end
+
+      it 'unable to add self as friend' do
+        user1.friend_request(user1)
+
+        expect(Friendship.count).to eq(0)
+      end
+    end
+
+    describe 'accept_request(friend)' do
+      it 'can change relationships in friendships table with correct status' do
+        user1.friend_request(user2)
+        user2.accept_request(user1)
+
+        expect(Friendship.count).to eq(2)
+
+        friendship_row1 = Friendship.first
+        friendship_row2 = Friendship.last
+
+        expect(friendship_row1.status).to eq('accepted')
+        expect(friendship_row2.status).to eq('accepted')
+      end
+    end
+
+    describe 'remove_friend(friend)' do
+      it 'can remove relationships in friendships table' do
+        user1.friend_request(user2)
+        user2.remove_friend(user1)
+
+        expect(Friendship.count).to eq(0)
+      end
+    end
   end
 end
