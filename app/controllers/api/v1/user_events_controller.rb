@@ -22,8 +22,8 @@ def update
     if user
       event = Event.find_by(id: params[:event_id])
       if event 
-        UserEvent.update(user: friend, event: event, status: 1)
-        render json: UserEventsSerializer.new(user), status: 202
+        user_event = UserEvent.find_by(event_id: params[:event_id], status: [:pending])&.accepted!
+        render json: EventInviteSerializer.new(user_event), status: 202
       else 
         render json: { error: 'Failed to find event' }, status: 404
       end
