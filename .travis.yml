@@ -1,5 +1,6 @@
 language: ruby
 before_script:
+- bundle exec rake db:drop
 - bundle exec rake db:create --all
 - bundle exec rake db:migrate
 services:
