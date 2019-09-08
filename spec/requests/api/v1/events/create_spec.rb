@@ -4,14 +4,13 @@ describe 'Event Create', type: :request do
 
   let(:content_type) { {'Content-Type': 'application/json', 'Accept': 'application/json'} }
   let(:user) { User.create!(first_name: 'First', last_name: 'Last', phone_number: '3033033030', email: 'test@email.com', password: 'password', password_confirmation: 'password') }
-  let(:event) { {'title': 'Happy Hour', 'description': 'Meet after school at Brothers', 'event_time': DateTime.current, 'event_location': 'Brothers', 'api_key': "#{user.api_key}"} }
-  let(:error_event1) { {'title': 'Happy Hour', 'event_time': DateTime.current, 'event_location': 'Brothers', 'api_key': "#{user.api_key}"} }
-  let(:error_event2) { {'title': 'Happy Hour', 'description': 'Meet after school at Brothers', 'event_time': DateTime.current, 'event_location': 'Brothers', 'api_key': '123der59jjhk'} }
+  let(:event) { {'title': 'Happy Hour', 'description': 'Meet after school at Brothers', 'event_time': DateTime.current, 'event_location': 'Brothers'} }
+  let(:error_event1) { {'title': 'Happy Hour', 'event_time': DateTime.current, 'event_location': 'Brothers'} }
+  let(:error_event2) { {'title': 'Happy Hour', 'description': 'Meet after school at Brothers', 'event_time': DateTime.current, 'event_location': 'Brothers'} }
 
   it 'returns json event object upon creating an event' do
-    post '/api/v1/events', params: event.to_json, headers: content_type
+    post "/api/v1/events?api_key=#{user.api_key}", params: event.to_json, headers: content_type
 
-    expect(response).to be_successful
     expect(response).to have_http_status(:created)
 
     result = JSON.parse(response.body)
@@ -41,7 +40,7 @@ describe 'Event Create', type: :request do
   end
 
   it 'returns json error message if information is missing in the request' do
-    post '/api/v1/events', params: error_event1.to_json, headers: content_type
+    post "/api/v1/events?api_key=#{user.api_key}", params: error_event1.to_json, headers: content_type
 
     expect(response).to have_http_status(422)
 
@@ -52,7 +51,7 @@ describe 'Event Create', type: :request do
   end
 
   it 'returns json error message if no user is found' do
-    post '/api/v1/events', params: error_event2.to_json, headers: content_type
+    post '/api/v1/events?api_key=asd!4gs?kSD', params: error_event2.to_json, headers: content_type
 
     expect(response).to have_http_status(404)
 

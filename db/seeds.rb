@@ -6,7 +6,7 @@ Friendship.destroy_all
 User.destroy_all
 Event.destroy_all
 
-user1, user2, user3, user4, user5 = create_list(:user, 5)
+user1, user2, user3, user4, user5, user6 = create_list(:user, 6)
 
 # User 1 creates 3 events
 event1, event2, event3 = create_list(:event, 3, creator: user1.first_name + ' ' + user1.last_name)
@@ -52,19 +52,26 @@ UserEvent.create!(user: user1, event: event10)
 UserEvent.create!(user: user4, event: event10)
 
 # User 1 is friends with user 2, user 3, user 4, and user 5
-Friendship.create!(user: user1, friend: user2)
-Friendship.create!(user: user1, friend: user3)
-Friendship.create!(user: user1, friend: user4)
-Friendship.create!(user: user1, friend: user5)
+Friendship.create!(user: user1, friend: user2, status: :accepted)
+Friendship.create!(user: user1, friend: user3, status: :accepted)
+Friendship.create!(user: user1, friend: user4, status: :accepted)
+Friendship.create!(user: user1, friend: user5, status: :accepted)
 # User 2 is friends with user 1 and user 4
-Friendship.create!(user: user2, friend: user1)
-Friendship.create!(user: user2, friend: user4)
+Friendship.create!(user: user2, friend: user1, status: :accepted)
+Friendship.create!(user: user2, friend: user4, status: :accepted)
 # User 3 is friends with user 1
-Friendship.create!(user: user3, friend: user1)
+Friendship.create!(user: user3, friend: user1, status: :accepted)
 # User 4 is friends with user 1, user 2, and user 5
-Friendship.create!(user: user4, friend: user1)
-Friendship.create!(user: user4, friend: user2)
-Friendship.create!(user: user4, friend: user5)
+Friendship.create!(user: user4, friend: user1, status: :accepted)
+Friendship.create!(user: user4, friend: user2, status: :accepted)
+Friendship.create!(user: user4, friend: user5, status: :accepted)
 # User 5 is friends with user 1 and user 4
-Friendship.create!(user: user5, friend: user1)
-Friendship.create!(user: user5, friend: user4)
+Friendship.create!(user: user5, friend: user1, status: :accepted)
+Friendship.create!(user: user5, friend: user4, status: :accepted)
+
+
+user1.friend_request(user6)
+user6.friend_request(user2)
+user3.friend_request(user4)
+user3.friend_request(user5)
+user3.friend_request(user6)

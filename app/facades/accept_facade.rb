@@ -2,7 +2,7 @@ class AcceptFacade
   def initialize(user, requester)
     @user = user
     @requester_user = requester
-    @user_friendship = Friendship.find_by(user: user, friend: requester)
+    @user_friendship = Friendship.find_by(user: user, friend: requester_user)
     @requester_user_friendship = Friendship.find_by(user: requester_user, friend: user)
   end
 
