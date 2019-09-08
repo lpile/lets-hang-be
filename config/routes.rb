@@ -11,10 +11,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create]
 
       # All friendships
-      namespace :friendships do
-        post '/request/:friend_id', to: 'request#create'
-        delete '/decline/:request_id', to: 'request#destroy'
-      end
+      resources :friendships, only: [:create, :update, :destroy]
 
       # Specific User
       namespace :user do

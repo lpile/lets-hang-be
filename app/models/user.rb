@@ -10,7 +10,6 @@ class User < ApplicationRecord
   has_many :friends, -> { where friendships: { status: :accepted } }, through: :friendships
   has_many :requested_friends, -> { where friendships: { status: :requested } }, through: :friendships, source: :friend
   has_many :pending_friends, -> { where friendships: { status: :pending } }, through: :friendships, source: :friend
-  has_many :blocked_friends, -> { where friendships: { status: :blocked } }, through: :friendships, source: :friend
 
   # Validates model attributes
   validates :email, uniqueness: true, presence: true
@@ -35,7 +34,7 @@ class User < ApplicationRecord
     end
   end
 
-  def reject_request(friend)
+  def remove_friend(friend)
     transaction do
       Friendship.find_by(user: self, friend: friend)&.destroy!
       Friendship.find_by(user: friend, friend: self)&.destroy!

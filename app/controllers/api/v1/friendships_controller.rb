@@ -1,4 +1,4 @@
-class Api::V1::Friendships::RequestController < ApplicationController
+class Api::V1::FriendshipsController < ApplicationController
   def create
     user = User.find_by(api_key: params[:api_key])
     if user
@@ -15,13 +15,29 @@ class Api::V1::Friendships::RequestController < ApplicationController
     end
   end
 
+  def update
+    user = User.find_by(api_key: params[:api_key])
+    if user
+      requestee_user = User.find_by(id: params[:id])
+      if requestee_user
+        user.accept_request(requestee_user)
+        accept_facade = AcceptFacade.new(user, requestee_user)
+        render json: AcceptSerializer.new(accept_facade), status: 202
+      else
+        render json: { error: 'Failed to find requesting user' }, status: 404
+      end
+    else
+      render json: { error: 'Failed to find user' }, status: 404
+    end
+  end
+
   def destroy
     user = User.find_by(api_key: params[:api_key])
     if user
-      requesting_user = User.find_by(id: params[:request_id])
-      if requesting_user
-        user.reject_request(requesting_user)
-        render json: { message: 'Pending friend request has been removed' }, status: 202
+      remove_user = User.find_by(id: params[:id])
+      if remove_user
+        user.remove_friend(remove_user)
+        head :no_content
       else
         render json: { error: 'Failed to find requesting user' }, status: 404
       end

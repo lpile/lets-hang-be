@@ -1,22 +1,20 @@
 require 'rails_helper'
 
-describe 'Friendships Request Create', type: :request do
+describe 'Friendships Create', type: :request do
 
   let(:content_type) { {'Content-Type': 'application/json', 'Accept': 'application/json'} }
   let(:user1) { create(:user) }
   let(:user2) { create(:user) }
-  let(:body) { {'api_key': "#{user1.api_key}"} }
 
-  it 'returns json message that friend request was successful' do
-    post "/api/v1/friendships/request/#{user2.id}", params: body.to_json, headers: content_type
+  it 'returns json response of requester and requestee' do
+    post "/api/v1/friendships?api_key=#{user1.api_key}&friend_id=#{user2.id}", headers: content_type
 
-    expect(response).to be_successful
-    expect(response).to have_http_status(:created)
+    expect(response).to have_http_status(201)
 
     result = JSON.parse(response.body)
 
-    user1_friendship = Friendship.first
-    user2_friendship = Friendship.last
+    user1_friendship = Friendship.first # Requester
+    user2_friendship = Friendship.last # Requestee
 
     # Checks response JSON API 1.0 Compliant
     expect(result).to have_key('data')
@@ -44,7 +42,7 @@ describe 'Friendships Request Create', type: :request do
   end
 
   it 'returns json error message if user is found' do
-    post "/api/v1/friendships/request/#{user2.id}", headers: content_type
+    post "/api/v1/friendships?api_key=lkj4!jhsnL&friend_id=#{user2.id}", headers: content_type
 
     expect(response).to have_http_status(404)
 
@@ -55,7 +53,7 @@ describe 'Friendships Request Create', type: :request do
   end
 
   it 'returns json error message if friend id is not found' do
-    post '/api/v1/friendships/request/5', params: body.to_json, headers: content_type
+    post "/api/v1/friendships?api_key=#{user1.api_key}&friend_id=3", headers: content_type
 
     expect(response).to have_http_status(404)
 
