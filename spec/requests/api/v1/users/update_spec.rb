@@ -8,7 +8,7 @@ describe 'User Update', type: :request do
   it 'returns json updated user information' do
     body = {'first_name': 'Update', 'last_name': 'Update', 'phone_number': '9999999999', 'email': 'update@email.com'}
 
-    patch "/api/v1/users/#{user.id}", params: body.to_json, headers: content_type
+    patch "/api/v1/users/#{user.id}?api_key=#{user.api_key}", params: body.to_json, headers: content_type
 
     expect(response).to have_http_status(202)
 
@@ -39,7 +39,7 @@ describe 'User Update', type: :request do
   it 'returns json error message if user cannot be found' do
     body = {'first_name': 'Update', 'last_name': 'Update', 'phone_number': '9999999999', 'email': 'update@email.com'}
 
-    patch '/api/v1/users/3', params: body.to_json, headers: content_type
+    patch "/api/v1/users/#{user.id}?api_key=c3f11ecd0c277a63ddf4", params: body.to_json, headers: content_type
 
     expect(response).to have_http_status(404)
 
@@ -55,7 +55,7 @@ describe 'User Update', type: :request do
     # User trying to update email that is already in database
     body = {'email': "#{another_user.email}"}
 
-    patch "/api/v1/users/#{user.id}", params: body.to_json, headers: content_type
+    patch "/api/v1/users/#{user.id}?api_key=#{user.api_key}", params: body.to_json, headers: content_type
 
     expect(response).to have_http_status(422)
 
@@ -68,7 +68,7 @@ describe 'User Update', type: :request do
   it 'returns json updated user information with only one updated attribute' do
     body = {'first_name': 'Update'}
 
-    patch "/api/v1/users/#{user.id}", params: body.to_json, headers: content_type
+    patch "/api/v1/users/#{user.id}?api_key=#{user.api_key}", params: body.to_json, headers: content_type
 
     expect(response).to have_http_status(202)
 
@@ -78,6 +78,7 @@ describe 'User Update', type: :request do
 
     # Checks if user was successful updated to User table
     expect(user_output.first_name).to_not eq(user[:first_name])
+    expect(user_output.first_name).to eq('Update')
     expect(user_output.last_name).to eq(user[:last_name])
     expect(user_output.phone_number).to eq(user[:phone_number])
     expect(user_output.email).to eq(user[:email])
