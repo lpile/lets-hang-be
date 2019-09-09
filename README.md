@@ -101,6 +101,7 @@ body:
   "email": "Update@email.com"
 }
 
+** Note: api_key query params is required **
 ** Note: At least one field is required **
 ```
 **Response:**
@@ -157,44 +158,33 @@ status: 200
 body:
 {
   "data": {
-    "id": "4",
+    "id": "1",
     "type": "user",
     "attributes": {
       "events": [
         {
-          "Title": "Sour Ale",
-          "Description": "Chuck Norris doesn't need a debugger, he just stares down the bug until the code confesses.",
-          "Time": "2019-09-04T07:05:00.000Z",
-          "Location": "Denver,CO",
-          "Creator": "Mike Will"
+          "id": 1,
+          "Title": "Event 1",
+          "Description": "description",
+          "Time": "04:03PM 09/09/19",
+          "Location": "Denver, CO",
+          "Creator": "User 1"
         },
         {
-          "Title": "Stout",
-          "Description": "All browsers support the hex definitions #chuck and #norris for the colors black and blue.",
-          "Time": "2019-09-03T23:16:00.000Z",
-          "Location": "Denver,CO",
-          "Creator": "Mike Will"
+          "id": 2,
+          "Title": "Event 2",
+          "Description": "description",
+          "Time": "04:03PM 09/11/19",
+          "Location": "Denver, CO",
+          "Creator": "User 1"
         },
         {
-          "Title": "Wood-aged Beer",
-          "Description": "Chuck Norris' beard is immutable.",
-          "Time": "2019-09-04T10:04:00.000Z",
-          "Location": "Denver,CO",
-          "Creator": "Mike Will"
-        },
-        {
-          "Title": "Strong Ale",
-          "Description": "No statement can catch the ChuckNorrisException.",
-          "Time": "2019-09-04T07:30:00.000Z",
-          "Location": "Denver,CO",
-          "Creator": "Isidro Boehm"
-        },
-        {
-          "Title": "Scottish And Irish Ale",
-          "Description": "When a bug sees Chuck Norris, it flees screaming in terror, and then immediately self-destructs to avoid being roundhouse-kicked.",
-          "Time": "2019-09-04T12:04:00.000Z",
-          "Location": "Denver,CO",
-          "Creator": "Thanh O'Conner"
+          "id": 3,
+          "Title": "Event 3",
+          "Description": "description",
+          "Time": "04:03PM 09/09/19",
+          "Location": "Denver, CO",
+          "Creator": "User 2"
         }
       ]
     }
@@ -207,7 +197,7 @@ body:
 status: 404
 body:
 {
-  "error"=>"Failed to find user"
+  "error": "Failed to find user"
 }
 ```
 
@@ -271,7 +261,7 @@ status: 200
 status: 404
 body:
 {
-  "error"=>"Failed to find user"
+  "error": "Failed to find user"
 }
 ```
 
@@ -298,14 +288,17 @@ status: 201
 body:
 {
   "data": {
-    "id": "11",
+    "id": "4",
     "type": "event",
     "attributes": {
       "title": "Happy Hour",
       "description": "Meet after school at Brothers",
-      "creator": "Mike Will",
-      "event_location": "Brothers",
-      "event_time": "01:05AM 09/04/19"
+      "creator": "User 1",
+      "event_location": "Denver, CO",
+      "event_time": "01:05AM 09/04/19",
+      "attendees": [
+        "User 1"
+      ]
     }
   }
 }
@@ -315,14 +308,14 @@ body:
 status: 404
 body:
 {
-  "error"=>"Failed to find user"
+  "error": "Failed to find user"
 }
 ```
 ```
 status: 422
 body:
 {
-  "error"=>"Failed to create event"
+  "error": "Failed to create event"
 }
 ```
 
@@ -345,15 +338,17 @@ body:
     "id": "1",
     "type": "event",
     "attributes": {
-      "title": "India Pale Ale",
-      "description": "The only pattern Chuck Norris knows is God Object.",
-      "creator": "Shirlee Rice",
-      "event_location": "Arrogant Bastard Ale",
-      "event_time": "07:57AM 09/04/19",
+      "title": "Event 1",
+      "description": "description",
+      "creator": "User 1",
+      "event_location": "Denver, CO",
+      "event_time": "04:03PM 09/09/19",
       "attendees": [
-        "Shirlee Rice",
-        "Ervin Gutmann",
-        "Sergio Metz"
+        "User 1",
+        "User 2",
+        "User 3",
+        "User 4",
+        "User 5"
       ]
     }
   }
@@ -364,14 +359,14 @@ body:
 status: 404
 body:
 {
-  "error"=>"Failed to find user"
+  "error": "Failed to find user"
 }
 ```
 ```
 status: 404
 body:
 {
-  "error"=>"Failed to find event"
+  "error": "Failed to find event"
 }
 ```
 
@@ -385,10 +380,10 @@ Accept: application/json}
 
 body:
 {
-  "title": "Upated Happy Hour",
-  "description": "Meet after school at Brothers",
+  "title": "Update Title",
+  "description": "Update Description",
   "event_time": "2019-09-04T07:05:00.000Z",
-  "event_location": "Brothers"
+  "event_location": "Aurora, CO"
 }
 ```
 **Response:**
@@ -397,14 +392,21 @@ status: 202
 body:
 {
   "data": {
-    "id": "11",
+    "id": "1",
     "type": "event",
     "attributes": {
-      "title": "Updated Happy Hour",
-      "description": "Meet after school at Brothers",
-      "creator": "Mike Will",
-      "event_location": "Brothers",
-      "event_time": "01:05AM 09/04/19"
+      "title": "Update Title",
+      "description": "Update Description",
+      "creator": "User 1",
+      "event_location": "Aurora, CO",
+      "event_time": "01:05AM 09/04/19",
+      "attendees": [
+        "User 1",
+        "User 2",
+        "User 3",
+        "User 4",
+        "User 5"
+      ]
     }
   }
 }
@@ -414,15 +416,14 @@ body:
 status: 404
 body:
 {
-  "error"=>"Failed to find user"
+  "error": "Failed to find user"
 }
 ```
-
 ```
-status: 422
+status: 404
 body:
 {
-  "error"=>"Failed to update event"
+  "error": "Failed to find event"
 }
 ```
 
