@@ -274,6 +274,98 @@ body:
 }
 ```
 
+#### Get all pending friends for user(current user who have requested other users to be friends)
+**Request:**
+```
+GET api/vi/user/pending_friends?api_key=asD7fsdfwef2332!%sdf
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+
+** Note: api_key query params is required **
+```
+**Response:**
+```
+status: 200
+{
+  "data": {
+    "id": "1",
+    "type": "user",
+    "attributes": {
+      "friends": [
+        {
+          "id": 2,
+          "Name": "Abe Kshlerin",
+          "Phone Number": "134.404.9791",
+          "Email": "danette_roob@example.com"
+        },
+        {
+          "id": 3,
+          "Name": "Jamey Conroy",
+          "Phone Number": "238-280-5410",
+          "Email": "terrance@example.com"
+        }
+      ]
+    }
+  }
+}
+```
+
+**Error:**
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find user"
+}
+```
+
+#### Get all requested friends for user(other users who have requested current user to be friends)
+**Request:**
+```
+GET api/vi/user/requested_friends?api_key=asD7fsdfwef2332!%sdf
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+
+** Note: api_key query params is required **
+```
+**Response:**
+```
+status: 200
+{
+  "data": {
+    "id": "1",
+    "type": "user",
+    "attributes": {
+      "friends": [
+        {
+          "id": 4,
+          "Name": "Quintin Cruickshank",
+          "Phone Number": "995.678.9202",
+          "Email": "bobbi_hodkiewicz@example.com"
+        },
+        {
+          "id": 5,
+          "Name": "Billie Spinka",
+          "Phone Number": "(833) 493-9944",
+          "Email": "saundra.strosin@example.net"
+        }
+      ]
+    }
+  }
+}
+```
+
+**Error:**
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find user"
+}
+```
+
 ## Event Endpoints
 #### Create a new event
 **Request:**
