@@ -9,7 +9,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def update
-    user = User.find_by(id: params[:id])
+    user = User.find_by(api_key: params[:api_key])
     if user
       user.update(user_params)
       if user.save
