@@ -8,7 +8,31 @@ class EventSerializer
     Time.at(object.event_time).strftime('%I:%M%p %m/%d/%y')
   end
 
-  attribute :attendees do |object|
-    object.users.map {|user| "#{user.first_name} #{user.last_name}"}
+  attribute :invited do |object|
+    # binding.pry
+    object.pendings.map do |user| 
+      {
+      "id": user.id,
+      "name": user.first_name + ' ' + user.last_name
+      }
+    end
+  end
+
+  attribute :accepted do |object|
+    object.accepts.map do |user| 
+      {
+      "id": user.id,
+      "name": user.first_name + ' ' + user.last_name
+      }
+      end
+    end
+
+  attribute :declined do |object|
+    object.declines.map do |user| 
+      {
+      "id": user.id,
+      "name": user.first_name + ' ' + user.last_name
+      }
+    end
   end
 end
