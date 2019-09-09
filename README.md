@@ -11,8 +11,8 @@ body:
 {
   "first_name": "First Name",
   "last_name": "Last Name",
-  "phone_number": "3033033030",
-  "email": "Name@email.com",
+  "phone_number": "9999999999",
+  "email": "FirstLast@email.com",
   "password": "password",
   "password_confirmation": "password"
 }
@@ -22,17 +22,15 @@ body:
 status: 201
 body:
 {
-  "data":
-  {
-    "type": "user",
+  "data": {
     "id": "1",
-    "attributes":
-    {
+    "type": "user",
+    "attributes": {
       "first_name": "First Name",
       "last_name": "Last Name",
-      "phone_number": "3033033030",
+      "phone_number": "9999999999",
       "email": "FirstLast@email.com",
-      "api_key": "asD7fsdfwef2332!%sdf"
+      "api_key": "8d5340cf0f6edca1f69d"
     }
   }
 }
@@ -42,14 +40,55 @@ body:
 status: 422
 body:
 {
-  "error"=>"Failed to register"
+  "error": "Failed to register"
+}
+```
+
+#### User login
+**Request:**
+```
+POST /api/v1/sessions
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+
+body:
+{
+  "email": "FirstLast@email.com",
+  "password": "password"
+}
+```
+**Response:**
+```
+status: 200
+body:
+{
+  "data": {
+    "id": "1",
+    "type": "user",
+    "attributes": {
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "phone_number": "9999999999",
+      "email": "FirstLast@email.com",
+      "api_key": "8d5340cf0f6edca1f69d"
+    }
+  }
+}
+```
+**Error:**
+```
+status: 422
+body:
+{
+  "error": "Failed to login"
 }
 ```
 
 #### Edit a user
 **Request:**
 ```
-PATCH /api/v1/users/:id
+PATCH /api/v1/users/:id?api_key=8d5340cf0f6edca1f69d
 Headers:
 {Content-Type: application/json,
 Accept: application/json}
@@ -86,63 +125,19 @@ body:
 
 ** Note: A new api key will be generated **
 ```
-
 **Errors:**
 ```
 status: 404
 body:
 {
-  "error"=>"Failed to find user"
+  "error": "Failed to find user"
 }
 ```
 ```
 status: 422
 body:
 {
-  "error"=>"Failed to update user"
-}
-```
-
-#### User login
-**Request:**
-```
-POST /api/v1/sessions
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
-body:
-{
-  "email": "Name@email.com",
-  "password": "password"
-}
-```
-**Response:**
-```
-status: 200
-body:
-{
-  "data":
-  {
-    "type": "user",
-    "id": "1",
-    "attributes":
-    {
-      "first_name": "First Name",
-      "last_name": "Last Name",
-      "phone_number": "3033033030",
-      "email": "FirstLast@email.com",
-      "api_key": "asD7fsdfwef2332!%sdf"
-    }
-  }
-}
-```
-**Error:**
-```
-status: 422
-body:
-{
-  "error"=>"Failed to login"
+  "error": "Failed to update user"
 }
 ```
 
@@ -219,7 +214,7 @@ body:
 #### Get all friends for user
 **Request:**
 ```
-GET api/vi/user/friends?api_key=asD7fsdfwef2332!%sdf
+GET api/vi/user/friends?api_key=c3f11ecd0c277a63ddf4
 Headers:
 {Content-Type: application/json,
 Accept: application/json}
@@ -234,129 +229,43 @@ status: 200
     "id": "1",
     "type": "user",
     "attributes": {
-      "friends": [
+      "accepted_friends": [
         {
           "id": 2,
-          "Name": "Abe Kshlerin",
-          "Phone Number": "134.404.9791",
-          "Email": "danette_roob@example.com"
+          "Name": "User 2",
+          "Phone Number": "2222222222",
+          "Email": "User2@email.com"
         },
         {
           "id": 3,
-          "Name": "Jamey Conroy",
-          "Phone Number": "238-280-5410",
-          "Email": "terrance@example.com"
-        },
+          "Name": "User 3",
+          "Phone Number": "3333333333",
+          "Email": "User3@email.com"
+        }
+      ],
+      "pending_friends": [
         {
           "id": 4,
-          "Name": "Quintin Cruickshank",
-          "Phone Number": "995.678.9202",
-          "Email": "bobbi_hodkiewicz@example.com"
-        },
+          "Name": "User 4",
+          "Phone Number": "4444444444",
+          "Email": "User4@email.com"
+        }
+      ],
+      "requested_friends": [
         {
           "id": 5,
-          "Name": "Billie Spinka",
-          "Phone Number": "(833) 493-9944",
-          "Email": "saundra.strosin@example.net"
+          "Name": "User 5",
+          "Phone Number": "5555555555",
+          "Email": "User5@email.com"
         }
       ]
     }
   }
 }
-```
 
-**Error:**
+** Note: Pending friend is when the current user request another user to be friends **
+** Note: Requested friend is when another user requests the current user to be friends **
 ```
-status: 404
-body:
-{
-  "error"=>"Failed to find user"
-}
-```
-
-#### Get all pending friends for user(current user who have requested other users to be friends)
-**Request:**
-```
-GET api/vi/user/pending_friends?api_key=asD7fsdfwef2332!%sdf
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
-** Note: api_key query params is required **
-```
-**Response:**
-```
-status: 200
-{
-  "data": {
-    "id": "1",
-    "type": "user",
-    "attributes": {
-      "friends": [
-        {
-          "id": 2,
-          "Name": "Abe Kshlerin",
-          "Phone Number": "134.404.9791",
-          "Email": "danette_roob@example.com"
-        },
-        {
-          "id": 3,
-          "Name": "Jamey Conroy",
-          "Phone Number": "238-280-5410",
-          "Email": "terrance@example.com"
-        }
-      ]
-    }
-  }
-}
-```
-
-**Error:**
-```
-status: 404
-body:
-{
-  "error"=>"Failed to find user"
-}
-```
-
-#### Get all requested friends for user(other users who have requested current user to be friends)
-**Request:**
-```
-GET api/vi/user/requested_friends?api_key=asD7fsdfwef2332!%sdf
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
-** Note: api_key query params is required **
-```
-**Response:**
-```
-status: 200
-{
-  "data": {
-    "id": "1",
-    "type": "user",
-    "attributes": {
-      "friends": [
-        {
-          "id": 4,
-          "Name": "Quintin Cruickshank",
-          "Phone Number": "995.678.9202",
-          "Email": "bobbi_hodkiewicz@example.com"
-        },
-        {
-          "id": 5,
-          "Name": "Billie Spinka",
-          "Phone Number": "(833) 493-9944",
-          "Email": "saundra.strosin@example.net"
-        }
-      ]
-    }
-  }
-}
-```
-
 **Error:**
 ```
 status: 404
