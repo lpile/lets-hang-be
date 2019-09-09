@@ -30,15 +30,15 @@ describe 'User Events Index', type: :request do
     # Checks the count of user's events
     expect(result['data']['attributes']['events'].count).to eq(3)
     # Checks the first event's keys
-    expect(result['data']['attributes']['events'].first).to have_key('Title')
-    expect(result['data']['attributes']['events'].first).to have_key('Description')
-    expect(result['data']['attributes']['events'].first).to have_key('Time')
-    expect(result['data']['attributes']['events'].first).to have_key('Creator')
-    expect(result['data']['attributes']['events'].first).to have_key('Location')
+    expect(result['data']['attributes']['events'].first).to have_key('title')
+    expect(result['data']['attributes']['events'].first).to have_key('description')
+    expect(result['data']['attributes']['events'].first).to have_key('event_time')
+    expect(result['data']['attributes']['events'].first).to have_key('creator')
+    expect(result['data']['attributes']['events'].first).to have_key('event_location')
     # Checks the last event's values
     expect(result['data']['attributes']['events'].last).to have_value(event3.title)
     expect(result['data']['attributes']['events'].last).to have_value(event3.description)
-    expect(result['data']['attributes']['events'].last).to have_value(Time.at(event3.event_time).strftime('%I:%M%p %m/%d/%y'))
+    expect(result['data']['attributes']['events'].last).to have_value('whenever')
     expect(result['data']['attributes']['events'].last).to have_value(event3.creator)
     expect(result['data']['attributes']['events'].last).to have_value(event3.event_location)
   end

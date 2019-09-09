@@ -40,9 +40,9 @@ describe 'User Friends Index', type: :request do
     expect(result['data']['attributes']['pending_friends'].count).to eq(2)
     # Checks the first accepted friend's keys
     expect(result['data']['attributes']['accepted_friends'].first).to have_key('id')
-    expect(result['data']['attributes']['accepted_friends'].first).to have_key('Name')
-    expect(result['data']['attributes']['accepted_friends'].first).to have_key('Phone Number')
-    expect(result['data']['attributes']['accepted_friends'].first).to have_key('Email')
+    expect(result['data']['attributes']['accepted_friends'].first).to have_key('name')
+    expect(result['data']['attributes']['accepted_friends'].first).to have_key('phone_number')
+    expect(result['data']['attributes']['accepted_friends'].first).to have_key('email')
     # Checks the last accepted friend's values
     expect(result['data']['attributes']['accepted_friends'].last).to have_value(friends[3].id)
     expect(result['data']['attributes']['accepted_friends'].last).to have_value(friends[3].first_name + ' ' + friends[3].last_name)
@@ -50,9 +50,9 @@ describe 'User Friends Index', type: :request do
     expect(result['data']['attributes']['accepted_friends'].last).to have_value(friends[3].email)
     # Checks the first requested friend's keys
     expect(result['data']['attributes']['requested_friends'].first).to have_key('id')
-    expect(result['data']['attributes']['requested_friends'].first).to have_key('Name')
-    expect(result['data']['attributes']['requested_friends'].first).to have_key('Phone Number')
-    expect(result['data']['attributes']['requested_friends'].first).to have_key('Email')
+    expect(result['data']['attributes']['requested_friends'].first).to have_key('name')
+    expect(result['data']['attributes']['requested_friends'].first).to have_key('phone_number')
+    expect(result['data']['attributes']['requested_friends'].first).to have_key('email')
     # Checks the last requested friend's values
     expect(result['data']['attributes']['requested_friends'].last).to have_value(requested[2].id)
     expect(result['data']['attributes']['requested_friends'].last).to have_value(requested[2].first_name + ' ' + requested[2].last_name)
@@ -60,9 +60,9 @@ describe 'User Friends Index', type: :request do
     expect(result['data']['attributes']['requested_friends'].last).to have_value(requested[2].email)
     # Checks the first pending friend's keys
     expect(result['data']['attributes']['pending_friends'].first).to have_key('id')
-    expect(result['data']['attributes']['pending_friends'].first).to have_key('Name')
-    expect(result['data']['attributes']['pending_friends'].first).to have_key('Phone Number')
-    expect(result['data']['attributes']['pending_friends'].first).to have_key('Email')
+    expect(result['data']['attributes']['pending_friends'].first).to have_key('name')
+    expect(result['data']['attributes']['pending_friends'].first).to have_key('phone_number')
+    expect(result['data']['attributes']['pending_friends'].first).to have_key('email')
     # Checks the last pending friend's values
     expect(result['data']['attributes']['pending_friends'].last).to have_value(pending[1].id)
     expect(result['data']['attributes']['pending_friends'].last).to have_value(pending[1].first_name + ' ' + pending[1].last_name)
