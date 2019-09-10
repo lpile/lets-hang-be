@@ -288,17 +288,22 @@ status: 201
 body:
 {
   "data": {
-    "id": "4",
+    "id": "6",
     "type": "event",
     "attributes": {
       "title": "Happy Hour",
       "description": "Meet after school at Brothers",
       "creator": "User 1",
-      "event_location": "Denver, CO",
-      "event_time": "01:05AM 09/04/19",
-      "attendees": [
-        "User 1"
-      ]
+      "event_time": "2019-09-04T07:05:00.000Z",
+      "event_location": "Brothers",
+      "invited": [],
+      "accepted": [
+        {
+          "id": 1,
+          "name": "User 1"
+        }
+      ],
+      "declined": []
     }
   }
 }
@@ -343,12 +348,27 @@ body:
       "creator": "User 1",
       "event_location": "Denver, CO",
       "event_time": "04:03PM 09/09/19",
-      "attendees": [
-        "User 1",
-        "User 2",
-        "User 3",
-        "User 4",
-        "User 5"
+      "invited": [
+        {
+          "id": 2,
+          "name": "User 2"
+        },
+        {
+          "id": 3,
+          "name": "User 3"
+        }
+      ],
+      "accepted": [
+        {
+          "id": 1,
+          "name": "User 1"
+        }
+      ],
+      "declined": [
+        {
+          "id": 4,
+          "name": "User 4"
+        }
       ]
     }
   }
@@ -382,7 +402,7 @@ body:
 {
   "title": "Update Title",
   "description": "Update Description",
-  "event_time": "2019-09-04T07:05:00.000Z",
+  "event_time": "whenever",
   "event_location": "Aurora, CO"
 }
 ```
@@ -392,20 +412,148 @@ status: 202
 body:
 {
   "data": {
-    "id": "1",
+    "id": "6",
     "type": "event",
     "attributes": {
       "title": "Update Title",
       "description": "Update Description",
       "creator": "User 1",
+      "event_time": "whenever",
       "event_location": "Aurora, CO",
-      "event_time": "01:05AM 09/04/19",
-      "attendees": [
-        "User 1",
-        "User 2",
-        "User 3",
-        "User 4",
-        "User 5"
+      "invited": [],
+      "accepted": [
+        {
+          "id": 1,
+          "name": "User 1"
+        }
+      ],
+      "declined": []
+    }
+  }
+}
+```
+**Errors:**
+```
+status: 404
+body:
+{
+  "error": "Failed to find user"
+}
+```
+```
+status: 404
+body:
+{
+  "error": "Failed to find event"
+}
+```
+
+#### Invite a friend to an event
+
+**Request:**
+```
+POST /api/v1/user/event/:event_id?api_key=<USER_API_KEY>
+
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+
+body:
+{
+  "friend_ids": [2,3]
+}
+```
+**Response:**
+```
+status: 202
+{
+  "data": {
+    "id": "7",
+    "type": "event",
+    "attributes": {
+      "title": "Update",
+      "description": "Meet after school at Brothers",
+      "creator": "User 1",
+      "event_time": "whenever",
+      "event_location": "Brothers",
+      "invited": [
+        {
+          "id": 2,
+          "name": "User 2"
+        },
+        {
+          "id": 3,
+          "name": "User 3"
+        }
+      ],
+      "accepted": [
+        {
+          "id": 1,
+          "name": "User 1"
+        }
+      ],
+      "declined": []
+    }
+  }
+}
+```
+**Errors:**
+```
+status: 404
+body:
+{
+  "error": "Failed to find user"
+}
+```
+```
+status: 404
+body:
+{
+  "error": "Failed to find event"
+}
+```
+
+#### User can decline an event invite
+
+**Request:**
+```
+DELETE /api/v1/user/event/:event_id?api_key=<USER_API_KEY>
+
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+
+```
+**Response:**
+```
+status: 202
+{
+  "data": {
+    "id": "7",
+    "type": "event",
+    "attributes": {
+      "title": "Update",
+      "description": "Meet after school at Brothers",
+      "creator": "User 1",
+      "event_time": "whenever",
+      "event_location": "Brothers",
+      "invited": [
+        {
+          "id": 3,
+          "name": "User 3"
+        }
+      ],
+      "accepted": [
+        {
+          "id": 1,
+          "name": "User 1"
+        }
+      ],
+      "declined": [
+        {
+          "id": 2,
+          "name": "User 2"
+        }
       ]
     }
   }
@@ -427,56 +575,66 @@ body:
 }
 ```
 
-
-#### Invite a friend to an event
+#### User can accept an event invite
 
 **Request:**
 ```
-POST /api/v1/user_events?api_key=<USER_API_KEY>&friend_id=<FRIEND_USER_ID>&event_id=<EVENT_ID>
+PATCH /api/v1/user/event/:event_id?api_key=<USER_API_KEY>
 
 Headers:
 {Content-Type: application/json,
 Accept: application/json}
+
 ```
 **Response:**
 ```
-status: 201
-body:
+status: 202
 {
   "data": {
-    "id": "13",
-    "type": "user_event",
+    "id": "7",
+    "type": "event",
     "attributes": {
-        "user_id": 879,
-        "event_id": 505,
-        "status": "pending"
-      }
-    
+      "title": "Update",
+      "description": "Meet after school at Brothers",
+      "creator": "User 1",
+      "event_time": "whenever",
+      "event_location": "Brothers",
+      "invited": [],
+      "accepted": [
+        {
+          "id": 1,
+          "name": "User 1"
+        },
+        {
+          "id": 3,
+          "name": "User 3"
+        }
+      ],
+      "declined": [
+        {
+          "id": 2,
+          "name": "User 2"
+        }
+      ]
     }
   }
-
+}
 ```
 **Errors:**
 ```
 status: 404
 body:
 {
-  "error"=>"Failed to find user"
+  "error": "Failed to find user"
 }
 ```
 ```
 status: 404
 body:
 {
-  "error"=>"Failed to find event"
+  "error": "Failed to find event"
 }
 ```
-
-<!-- A friend can accept an event invitation -->
-
-<!-- A friend can decline an event inviation -->
-
-
 
 ## Friendship Endpoints
 #### Friend request
@@ -571,6 +729,7 @@ body:
   "error"=>"Failed to find requesting friend"
 }
 ```
+
 #### Decline friend request / remove friend
 **Request:**
 ```
