@@ -39,4 +39,22 @@ class Api::V1::User::EventController < ApplicationController
       render json: { error: 'Failed to find user' }, status: 404
     end
   end
+
+  def destroy
+    user = User.find_by(api_key: params[:api_key])
+    if user
+      event = Event.find_by(id: params[:id])
+      if event
+        user_event = UserEvent.find_by(user: user, event: event)
+
+        user_event.update(status: :declined)
+
+        render json: EventSerializer.new(event), status: 202
+      else
+        render json: { error: 'Failed to find event' }, status: 404
+      end
+    else
+      render json: { error: 'Failed to find user' }, status: 404
+    end
+  end
 end
