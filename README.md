@@ -164,27 +164,27 @@ body:
       "events": [
         {
           "id": 1,
-          "Title": "Event 1",
-          "Description": "description",
-          "Time": "04:03PM 09/09/19",
-          "Location": "Denver, CO",
-          "Creator": "User 1"
+          "title": "Event 1",
+          "description": "description",
+          "event_time": "04:03PM 09/09/19",
+          "event_location": "Denver, CO",
+          "creator": "User 1"
         },
         {
           "id": 2,
-          "Title": "Event 2",
-          "Description": "description",
-          "Time": "04:03PM 09/11/19",
-          "Location": "Denver, CO",
-          "Creator": "User 1"
+          "title": "Event 2",
+          "description": "description",
+          "event_time": "04:03PM 09/11/19",
+          "event_location": "Denver, CO",
+          "creator": "User 1"
         },
         {
           "id": 3,
-          "Title": "Event 3",
-          "Description": "description",
-          "Time": "04:03PM 09/09/19",
-          "Location": "Denver, CO",
-          "Creator": "User 2"
+          "title": "Event 3",
+          "description": "description",
+          "event_time": "04:03PM 09/09/19",
+          "event_location": "Denver, CO",
+          "creator": "User 2"
         }
       ]
     }
@@ -222,31 +222,31 @@ status: 200
       "accepted_friends": [
         {
           "id": 2,
-          "Name": "User 2",
-          "Phone Number": "2222222222",
-          "Email": "User2@email.com"
+          "name": "User 2",
+          "phone_number": "2222222222",
+          "email": "User2@email.com"
         },
         {
           "id": 3,
-          "Name": "User 3",
-          "Phone Number": "3333333333",
-          "Email": "User3@email.com"
+          "name": "User 3",
+          "phone_number": "3333333333",
+          "email": "User3@email.com"
         }
       ],
       "pending_friends": [
         {
           "id": 4,
-          "Name": "User 4",
-          "Phone Number": "4444444444",
-          "Email": "User4@email.com"
+          "name": "User 4",
+          "phone_number": "4444444444",
+          "email": "User4@email.com"
         }
       ],
       "requested_friends": [
         {
           "id": 5,
-          "Name": "User 5",
-          "Phone Number": "5555555555",
-          "Email": "User5@email.com"
+          "name": "User 5",
+          "phone_number": "5555555555",
+          "email": "User5@email.com"
         }
       ]
     }

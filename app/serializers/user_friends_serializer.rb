@@ -6,9 +6,9 @@ class UserFriendsSerializer
     object.friends.map do |friend|
       {
         "id": friend.id,
-        "Name": friend.first_name + ' ' + friend.last_name,
-        "Phone Number": friend.phone_number,
-        "Email": friend.email
+        "name": friend.first_name + ' ' + friend.last_name,
+        "phone_number": friend.phone_number,
+        "email": friend.email
       }
     end
   end
@@ -17,9 +17,9 @@ class UserFriendsSerializer
     object.pending_friends.map do |friend|
       {
         "id": friend.id,
-        "Name": friend.first_name + ' ' + friend.last_name,
-        "Phone Number": friend.phone_number,
-        "Email": friend.email
+        "name": friend.first_name + ' ' + friend.last_name,
+        "phone_number": friend.phone_number,
+        "email": friend.email
       }
     end
   end
@@ -28,9 +28,9 @@ class UserFriendsSerializer
     object.requested_friends.map do |friend|
       {
         "id": friend.id,
-        "Name": friend.first_name + ' ' + friend.last_name,
-        "Phone Number": friend.phone_number,
-        "Email": friend.email
+        "name": friend.first_name + ' ' + friend.last_name,
+        "phone_number": friend.phone_number,
+        "email": friend.email
       }
     end
   end

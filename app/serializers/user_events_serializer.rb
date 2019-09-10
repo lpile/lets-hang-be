@@ -4,12 +4,13 @@ class UserEventsSerializer
   set_id :id
   attribute :events do |object|
     object.events.map do |event|
-      {"id": event.id,
-       "Title": event.title,
-       "Description": event.description,
-       "Time": Time.at(event.event_time).strftime('%I:%M%p %m/%d/%y'),
-       "Location": event.event_location,
-       "Creator": event.creator
+      {
+       "id": event.id,
+       "title": event.title,
+       "description": event.description,
+       "event_time": event.event_time,
+       "event_location": event.event_location,
+       "creator": event.creator
       }
     end
   end
