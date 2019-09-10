@@ -1,13 +1,38 @@
-## Users Endpoints  
-#### Create a user
-**Request:**
-```
-POST /api/v1/users
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
+Table of Contents
+=================
 
-body:
+##### [User Endpoints](#user-endpoints)
+  * [Create An User](#create-an-user)
+  * [Login An User](#login-an-user)
+  * [Update An User](#update-an-user)
+  * [Get All Events Associated With User](#get-all-events-associated-with-user)
+  * [Get All Friends Associated With User](#get-all-friends-associated-with-user)
+
+##### [Event Endpoints](#event-endpoints)
+  * [Create An Event](#create-an-event)
+  * [Show An Event](#show-an-event)
+  * [Update An Event](#update-an-event)
+  * [Invite A Friend To Event](#invite-a-friend-to-event)
+  * [User Can Decline Event Invite](#user-can-decline-event-invite)
+  * [User Can Accept Event Invite](#user-can-accept-event-invite)
+
+##### [Friendship Endpoints](#friendship-endpoints)
+  * [Send Friend Request](#send-friend-request)
+  * [Accept Friend Request](#accept-friend-request)
+  * [Decline Friend Request Or Remove Friend](#decline-friend-request-or-remove-friend)
+
+
+User Endpoints
+==============
+
+Create An User
+-------------
+**Request**
+```
+POST https://lets-hang-be.herokuapp.com/api/v1/users
+```
+**Request Body**
+```
 {
   "first_name": "First Name",
   "last_name": "Last Name",
@@ -17,10 +42,8 @@ body:
   "password_confirmation": "password"
 }
 ```
-**Response:**
+**Response Body**
 ```
-status: 201
-body:
 {
   "data": {
     "id": "1",
@@ -35,30 +58,21 @@ body:
   }
 }
 ```
-**Error:**
-```
-status: 422
-body:
-{
-  "error": "Failed to register"
-}
-```
 
-#### User login
-**Request:**
+Login An User
+-------------
+**Request**
 ```
-POST /api/v1/sessions
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
-body:
+POST https://lets-hang-be.herokuapp.com/api/v1/sessions
+```
+**Request Body**
+```
 {
   "email": "FirstLast@email.com",
   "password": "password"
 }
 ```
-**Response:**
+**Response Body**
 ```
 status: 200
 body:
@@ -76,24 +90,19 @@ body:
   }
 }
 ```
-**Error:**
-```
-status: 422
-body:
-{
-  "error": "Failed to login"
-}
-```
 
-#### Edit a user
-**Request:**
+Update An User
+--------------
+**Request**
 ```
-PATCH /api/v1/users/:id?api_key=8d5340cf0f6edca1f69d
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
-body:
+PATCH https://lets-hang-be.herokuapp.com/api/v1/users/{USER_ID}
+```
+**Parameters**
+```
+api_key=<USER_API_KEY>
+```
+**Request Body**
+```
 {
   "first_name": "Update Name",
   "last_name": "Update Name",
@@ -101,13 +110,9 @@ body:
   "email": "Update@email.com"
 }
 
-** Note: api_key query params is required **
-** Note: At least one field is required **
 ```
-**Response:**
+**Response Body**
 ```
-status: 202
-body:
 {
   "data":
   {
@@ -124,38 +129,19 @@ body:
   }
 }
 
-** Note: A new api key will be generated **
 ```
-**Errors:**
+Get All Events Associated With User
+-----------------------------------
+**Request**
 ```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
+GET https://lets-hang-be.herokuapp.com/api/vi/user/events
 ```
+**Parameters**
 ```
-status: 422
-body:
-{
-  "error": "Failed to update user"
-}
+api_key=<USER_API_KEY>
 ```
-
-#### Get all events for user
-**Request:**
+**Response Body**
 ```
-GET api/vi/user/events?api_key=asD7fsdfwef2332!%sdf
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
-** Note: api_key query params is required **
-```
-**Response:**
-```
-status: 200
-body:
 {
   "data": {
     "id": "1",
@@ -166,7 +152,7 @@ body:
           "id": 1,
           "title": "Event 1",
           "description": "description",
-          "event_time": "04:03PM 09/09/19",
+          "event_time": "whenever",
           "event_location": "Denver, CO",
           "creator": "User 1"
         },
@@ -174,7 +160,7 @@ body:
           "id": 2,
           "title": "Event 2",
           "description": "description",
-          "event_time": "04:03PM 09/11/19",
+          "event_time": "Tonight at 9pm",
           "event_location": "Denver, CO",
           "creator": "User 1"
         },
@@ -182,7 +168,7 @@ body:
           "id": 3,
           "title": "Event 3",
           "description": "description",
-          "event_time": "04:03PM 09/09/19",
+          "event_time": "Right now",
           "event_location": "Denver, CO",
           "creator": "User 2"
         }
@@ -192,28 +178,18 @@ body:
 }
 ```
 
-**Error:**
+Get All Friends Associated With User
+------------------------------------
+**Request**
 ```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
+GET https://lets-hang-be.herokuapp.comapi/vi/user/friends
 ```
-
-#### Get all friends for user
-**Request:**
+**Parameters**
 ```
-GET api/vi/user/friends?api_key=c3f11ecd0c277a63ddf4
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
-** Note: api_key query params is required **
+api_key=<USER_API_KEY>
 ```
-**Response:**
+**Response Body**
 ```
-status: 200
 {
   "data": {
     "id": "1",
@@ -256,25 +232,22 @@ status: 200
 ** Note: Pending friend is when the current user request another user to be friends **
 ** Note: Requested friend is when another user requests the current user to be friends **
 ```
-**Error:**
-```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
-```
 
-## Event Endpoints
-#### Create a new event
-**Request:**
-```
-POST /api/v1/events?api_key=asd!4gs?kSD
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
+Event Endpoints
+===============
 
-body:
+Create An Event
+---------------
+**Request**
+```
+POST https://lets-hang-be.herokuapp.com/api/v1/events
+```
+**Parameters**
+```
+api_key=<USER_API_KEY>
+```
+**Request Body**
+```
 {
   "title": "Happy Hour",
   "description": "Meet after school at Brothers",
@@ -282,62 +255,43 @@ body:
   "event_location": "Brothers"
 }
 ```
-**Response:**
+**Response Body**
 ```
-status: 201
-body:
 {
   "data": {
-    "id": "6",
+    "id": "1",
     "type": "event",
     "attributes": {
       "title": "Happy Hour",
       "description": "Meet after school at Brothers",
       "creator": "User 1",
-      "event_time": "2019-09-04T07:05:00.000Z",
-      "event_location": "Brothers",
+      "event_time": "Around 4pm",
+      "event_location": "Denver, CO",
       "invited": [],
       "accepted": [
-        {
-          "id": 1,
-          "name": "User 1"
-        }
+      {
+        "id": 1,
+        "name": "User 1"
+      }
       ],
       "declined": []
     }
   }
 }
 ```
-**Errors:**
-```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
-```
-```
-status: 422
-body:
-{
-  "error": "Failed to create event"
-}
-```
 
-#### Get an event
-**Request:**
+Show An Event
+-------------
+**Request**
 ```
-GET api/vi/events/:event_id?api_key=asD7fsdfwef2332!%sdf
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
-** Note: api_key query params is required **
+GET https://lets-hang-be.herokuapp.com/api/vi/events/{EVENT_ID}
 ```
-**Response:**
+**Parameters**
 ```
-status: 200
-body:
+api_key=<USER_API_KEY>
+```
+**Response Body**
+```
 {
   "data": {
     "id": "1",
@@ -349,56 +303,44 @@ body:
       "event_location": "Denver, CO",
       "event_time": "04:03PM 09/09/19",
       "invited": [
-        {
-          "id": 2,
-          "name": "User 2"
-        },
-        {
-          "id": 3,
-          "name": "User 3"
-        }
+      {
+      "id": 2,
+      "name": "User 2"
+      },
+      {
+        "id": 3,
+        "name": "User 3"
+      }
       ],
       "accepted": [
-        {
-          "id": 1,
-          "name": "User 1"
-        }
+      {
+        "id": 1,
+        "name": "User 1"
+      }
       ],
       "declined": [
-        {
-          "id": 4,
-          "name": "User 4"
-        }
+      {
+        "id": 4,
+        "name": "User 4"
+      }
       ]
     }
   }
 }
 ```
-**Errors:**
-```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
-```
-```
-status: 404
-body:
-{
-  "error": "Failed to find event"
-}
-```
 
-#### Update an event
-**Request:**
+Update An Event
+---------------
+**Request**
 ```
-PATCH api/vi/events/:id?api_key=asd!4gs?kSD
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
-body:
+PATCH https://lets-hang-be.herokuapp.com/api/vi/events/{EVENT_ID}
+```
+**Parameters**
+```
+api_key=<USER_API_KEY>
+```
+**Request Body**
+```
 {
   "title": "Update Title",
   "description": "Update Description",
@@ -406,10 +348,8 @@ body:
   "event_location": "Aurora, CO"
 }
 ```
-**Response:**
+**Response Body**
 ```
-status: 202
-body:
 {
   "data": {
     "id": "6",
@@ -432,50 +372,35 @@ body:
   }
 }
 ```
-**Errors:**
-```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
-```
-```
-status: 404
-body:
-{
-  "error": "Failed to find event"
-}
-```
 
-#### Invite a friend to an event
-
-**Request:**
+Invite A Friend To Event
+------------------------
+**Request**
 ```
-POST /api/v1/user/event/:event_id?api_key=<USER_API_KEY>
-
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
-body:
+POST https://lets-hang-be.herokuapp.com/api/v1/user/event/{EVENT_ID}
+```
+**Parameters**
+```
+api_key=<USER_API_KEY>
+```
+**Request Body**
+```
 {
   "friend_ids": [2,3]
 }
 ```
-**Response:**
+**Response Body**
 ```
-status: 202
 {
   "data": {
     "id": "7",
     "type": "event",
     "attributes": {
-      "title": "Update",
+      "title": "Happy Hour",
       "description": "Meet after school at Brothers",
       "creator": "User 1",
-      "event_time": "whenever",
-      "event_location": "Brothers",
+      "event_time": "Around 4pm",
+      "event_location": "Denver, CO",
       "invited": [
         {
           "id": 2,
@@ -497,46 +422,31 @@ status: 202
   }
 }
 ```
-**Errors:**
-```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
-```
-```
-status: 404
-body:
-{
-  "error": "Failed to find event"
-}
-```
 
-#### User can decline an event invite
+
+User Can Decline Event Invite
+-----------------------------
 
 **Request:**
 ```
-DELETE /api/v1/user/event/:event_id?api_key=<USER_API_KEY>
-
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
+DELETE https://lets-hang-be.herokuapp.com/api/v1/user/event/{EVENT_ID}
 ```
-**Response:**
+**Parameters**
 ```
-status: 202
+api_key=<USER_API_KEY>
+```
+**Response Body**
+```
 {
   "data": {
     "id": "7",
     "type": "event",
     "attributes": {
-      "title": "Update",
+      "title": "Happy Hour",
       "description": "Meet after school at Brothers",
       "creator": "User 1",
-      "event_time": "whenever",
-      "event_location": "Brothers",
+      "event_time": "Around 4pm",
+      "event_location": "Denver, CO",
       "invited": [
         {
           "id": 3,
@@ -559,46 +469,29 @@ status: 202
   }
 }
 ```
-**Errors:**
-```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
-```
-```
-status: 404
-body:
-{
-  "error": "Failed to find event"
-}
-```
 
-#### User can accept an event invite
-
-**Request:**
+User Can Accept Event Invite
+----------------------------
+**Request**
 ```
-PATCH /api/v1/user/event/:event_id?api_key=<USER_API_KEY>
-
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-
+PATCH https://lets-hang-be.herokuapp.com/api/v1/user/event/{EVENT_ID}
 ```
-**Response:**
+**Parameters**
 ```
-status: 202
+api_key=<USER_API_KEY>
+```
+**Response Body**
+```
 {
   "data": {
     "id": "7",
     "type": "event",
     "attributes": {
-      "title": "Update",
+      "title": "Happy Hour",
       "description": "Meet after school at Brothers",
       "creator": "User 1",
-      "event_time": "whenever",
-      "event_location": "Brothers",
+      "event_time": "Around 4pm",
+      "event_location": "Denver, CO",
       "invited": [],
       "accepted": [
         {
@@ -620,35 +513,23 @@ status: 202
   }
 }
 ```
-**Errors:**
-```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
-```
-```
-status: 404
-body:
-{
-  "error": "Failed to find event"
-}
-```
 
-## Friendship Endpoints
-#### Friend request
-**Request:**
+Friendship Endpoints
+====================
+
+Send Friend Request
+-------------------
+**Request**
 ```
-POST /api/v1/friendships?api_key=<USER_API_KEY>&friend_id=<FRIEND_USER_ID>
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
+POST https://lets-hang-be.herokuapp.com/api/v1/friendships
 ```
-**Response:**
+**Parameters**
 ```
-status: 200
-body:
+api_key=<USER_API_KEY>
+friend_id=<FRIEND_USER_ID>
+```
+**Response Body**
+```
 {
   "data": {
     "id": "13",
@@ -668,33 +549,19 @@ body:
   }
 }
 ```
-**Errors:**
+
+Accept Friend Request
+---------------------
+**Request**
 ```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
+PATCH https://lets-hang-be.herokuapp.com/api/v1/friendships/{REQUESTER_USER_ID}
 ```
+**Parameters**
 ```
-status: 404
-body:
-{
-  "error": "Failed to find friend"
-}
+api_key=<USER_API_KEY>
 ```
-#### Accept friend request
-**Request:**
+**Response Body**
 ```
-PATCH /api/v1/friendships/<REQUESTER_USER_ID>?api_key=<USER_API_KEY>
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
-```
-**Response:**
-```
-status: 200
-body:
 {
   "data": {
     "id": "14",
@@ -714,46 +581,18 @@ body:
   }
 }
 ```
-**Errors:**
-```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
-```
-```
-status: 404
-body:
-{
-  "error": "Failed to find requesting user"
-}
-```
 
-#### Decline friend request / remove friend
-**Request:**
+Decline Friend Request Or Remove Friend
+---------------------------------------
+**Request**
 ```
-DELETE /api/v1/friendships/<REMOVE_USER_ID>?api_key=<USER_API_KEY>
-Headers:
-{Content-Type: application/json,
-Accept: application/json}
+DELETE https://lets-hang-be.herokuapp.com/api/v1/friendships/{REQUESTER_USER_ID}
 ```
-**Response:**
+**Parameters**
+```
+api_key=<USER_API_KEY>
+```
+**Response Status**
 ```
 status: 204
-```
-**Errors:**
-```
-status: 404
-body:
-{
-  "error": "Failed to find user"
-}
-```
-```
-status: 404
-body:
-{
-  "error": "Failed to find requesting user"
-}
 ```
