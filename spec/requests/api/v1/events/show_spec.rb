@@ -29,7 +29,7 @@ describe 'Events Show', type: :request do
     # Checks response has correct data
     expect(result['data']['attributes']['title']).to eq(event.title)
     expect(result['data']['attributes']['description']).to eq(event.description)
-    expect(result['data']['attributes']['event_time']).to eq(Time.at(event.event_time).strftime('%I:%M%p %m/%d/%y'))
+    expect(result['data']['attributes']['event_time']).to eq('whenever')
     expect(result['data']['attributes']['event_location']).to eq(event.event_location)
     expect(result['data']['attributes']['creator']).to eq(event.creator)
   end
