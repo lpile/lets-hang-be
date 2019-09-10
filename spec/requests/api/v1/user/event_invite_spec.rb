@@ -38,7 +38,7 @@ describe 'Event Invite Create', type: :request do
     expect(result['data']['attributes']['declined'].count).to eq(0)
     # Checks the first invited user's keys
     expect(result['data']['attributes']['invited'].first).to have_key('id')
-    expect(result['data']['attributes']['invited'].first).to have_key('Name')
+    expect(result['data']['attributes']['invited'].first).to have_key('name')
     # Checks the last invited user's values
     expect(result['data']['attributes']['invited'].last).to have_value(friends[2].id)
     expect(result['data']['attributes']['invited'].last).to have_value(friends[2].first_name + ' ' + friends[2].last_name)

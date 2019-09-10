@@ -45,7 +45,7 @@ user4.friend_request(user8)
 user5.friend_request(user8)
 user6.friend_request(user8)
 
-# Event 1 has users 1 through 5 attending
+# Event 1 has users 1 through 4 attending
 # Event 2 only has user 1 attending
 # Event 3 has users 1, 3, 5 attending
 # Event 4 has users 2 through 6 attending
@@ -54,7 +54,6 @@ UserEvent.create!(user: user1, event: event1, status: :accepted)
 UserEvent.create!(user: user2, event: event1, status: :accepted)
 UserEvent.create!(user: user3, event: event1, status: :accepted)
 UserEvent.create!(user: user4, event: event1, status: :accepted)
-UserEvent.create!(user: user5, event: event1, status: :accepted)
 UserEvent.create!(user: user1, event: event2, status: :accepted)
 UserEvent.create!(user: user1, event: event3, status: :accepted)
 UserEvent.create!(user: user3, event: event3, status: :accepted)

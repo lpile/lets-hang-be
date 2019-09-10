@@ -8,7 +8,7 @@ class EventSerializer
     object.pendings.map do |user|
       {
       'id': user.id,
-      'Name': user.first_name + ' ' + user.last_name
+      'name': user.first_name + ' ' + user.last_name
       }
     end
   end
@@ -17,7 +17,7 @@ class EventSerializer
     object.accepts.map do |user|
       {
       'id': user.id,
-      'Name': user.first_name + ' ' + user.last_name
+      'name': user.first_name + ' ' + user.last_name
       }
     end
   end
@@ -26,7 +26,7 @@ class EventSerializer
     object.declines.map do |user|
       {
       'id': user.id,
-      'Name': user.first_name + ' ' + user.last_name
+      'name': user.first_name + ' ' + user.last_name
       }
     end
   end

@@ -37,24 +37,12 @@ describe 'User Event Accept Create', type: :request do
     expect(result['data']['attributes']['invited'].count).to eq(0)
     expect(result['data']['attributes']['accepted'].count).to eq(2)
     expect(result['data']['attributes']['declined'].count).to eq(0)
-    # Checks the first invited user's keys
-    # expect(result['data']['attributes']['invited'].first).to have_key('id')
-    # expect(result['data']['attributes']['invited'].first).to have_key('Name')
-    # # Checks the last invited user's values
-    # expect(result['data']['attributes']['invited'].last).to have_value(friends[2].id)
-    # expect(result['data']['attributes']['invited'].last).to have_value(friends[2].first_name + ' ' + friends[2].last_name)
     # Checks the first accepted user's keys
     expect(result['data']['attributes']['accepted'].first).to have_key('id')
-    expect(result['data']['attributes']['accepted'].first).to have_key('Name')
+    expect(result['data']['attributes']['accepted'].first).to have_key('name')
     # Checks the last accepted user's values
     expect(result['data']['attributes']['accepted'].last).to have_value(user2.id)
     expect(result['data']['attributes']['accepted'].last).to have_value(user2.first_name + ' ' + user2.last_name)
-    # # Checks the first declined user's keys
-    # expect(result['data']['attributes']['declined'].first).to have_key('id')
-    # expect(result['data']['attributes']['declined'].first).to have_key('Name')
-    # # Checks the last declined user's values
-    # expect(result['data']['attributes']['declined'].last).to have_value(nil)
-    # expect(result['data']['attributes']['declined'].last).to have_value(nil)
     # Checks if all users where invited to event was successfully added to UserEvent table
     expect(user_events.count).to eq(2)
     expect(user_events[0].user_id).to eq(user1.id)
