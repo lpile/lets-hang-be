@@ -16,12 +16,12 @@ user7 = User.create!(first_name: 'User', last_name: '7', phone_number: '77777777
 user8 = User.create!(first_name: 'User', last_name: '8', phone_number: '8888888888', email: 'User8@email.com', password: 'password', password_confirmation: 'password')
 
 # User 1 creates 3 events
-event1 = Event.create!(title: 'Event 1', description: 'description', event_time: DateTime.now, event_location: 'Denver, CO', creator: "#{user1.first_name} #{user1.last_name}")
-event2 = Event.create!(title: 'Event 2', description: 'description', event_time: DateTime.now + 2, event_location: 'Denver, CO', creator: "#{user1.first_name} #{user1.last_name}")
-event3 = Event.create!(title: 'Event 3', description: 'description', event_time: DateTime.now + 5, event_location: 'Denver, CO', creator: "#{user1.first_name} #{user1.last_name}")
+event1 = Event.create!(title: 'Event 1', description: 'description', event_time: 'whenever', event_location: 'Denver, CO', creator: "#{user1.first_name} #{user1.last_name}")
+event2 = Event.create!(title: 'Event 2', description: 'description', event_time: 'whenever', event_location: 'Denver, CO', creator: "#{user1.first_name} #{user1.last_name}")
+event3 = Event.create!(title: 'Event 3', description: 'description', event_time: 'whenever', event_location: 'Denver, CO', creator: "#{user1.first_name} #{user1.last_name}")
 # User 2 creates 2 events
-event4 = Event.create!(title: 'Event 4', description: 'description', event_time: DateTime.now, event_location: 'Denver, CO', creator: "#{user2.first_name} #{user2.last_name}")
-event5 = Event.create!(title: 'Event 5', description: 'description', event_time: DateTime.now + 2, event_location: 'Denver, CO', creator: "#{user2.first_name} #{user2.last_name}")
+event4 = Event.create!(title: 'Event 4', description: 'description', event_time: 'whenever', event_location: 'Denver, CO', creator: "#{user2.first_name} #{user2.last_name}")
+event5 = Event.create!(title: 'Event 5', description: 'description', event_time: 'whenever', event_location: 'Denver, CO', creator: "#{user2.first_name} #{user2.last_name}")
 
 # User 1 is friends with Users 2,3,4
 # User 1 has pending friends of Users 5 and 6

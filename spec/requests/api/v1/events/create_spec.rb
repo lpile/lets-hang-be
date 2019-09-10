@@ -30,7 +30,6 @@ describe 'Event Create', type: :request do
     expect(result['data']['attributes']['event_time']).to eq('whenever')
     expect(result['data']['attributes']['event_location']).to eq(event_output.event_location)
     expect(result['data']['attributes']['creator']).to eq(event_output.creator)
-    expect(result['data']['attributes']['attendees'].count).to eq(1)
     # Checks if new event was successful added to Event table
     expect(event_output.title).to eq(event[:title])
     expect(event_output.description).to eq(event[:description])

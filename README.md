@@ -427,6 +427,57 @@ body:
 }
 ```
 
+
+#### Invite a friend to an event
+
+**Request:**
+```
+POST /api/v1/user_events?api_key=<USER_API_KEY>&friend_id=<FRIEND_USER_ID>&event_id=<EVENT_ID>
+
+Headers:
+{Content-Type: application/json,
+Accept: application/json}
+```
+**Response:**
+```
+status: 201
+body:
+{
+  "data": {
+    "id": "13",
+    "type": "user_event",
+    "attributes": {
+        "user_id": 879,
+        "event_id": 505,
+        "status": "pending"
+      }
+    
+    }
+  }
+
+```
+**Errors:**
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find user"
+}
+```
+```
+status: 404
+body:
+{
+  "error"=>"Failed to find event"
+}
+```
+
+<!-- A friend can accept an event invitation -->
+
+<!-- A friend can decline an event inviation -->
+
+
+
 ## Friendship Endpoints
 #### Friend request
 **Request:**

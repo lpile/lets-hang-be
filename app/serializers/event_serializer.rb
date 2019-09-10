@@ -4,7 +4,30 @@ class EventSerializer
   set_id :id
   attributes :title, :description, :creator, :event_time, :event_location
 
-  attribute :attendees do |object|
-    object.users.map {|user| "#{user.first_name} #{user.last_name}"}
+  attribute :invited do |object|
+    object.pendings.map do |user|
+      {
+      'id': user.id,
+      'Name': user.first_name + ' ' + user.last_name
+      }
+    end
+  end
+
+  attribute :accepted do |object|
+    object.accepts.map do |user|
+      {
+      'id': user.id,
+      'Name': user.first_name + ' ' + user.last_name
+      }
+    end
+  end
+
+  attribute :declined do |object|
+    object.declines.map do |user|
+      {
+      'id': user.id,
+      'Name': user.first_name + ' ' + user.last_name
+      }
+    end
   end
 end

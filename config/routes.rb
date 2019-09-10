@@ -16,6 +16,8 @@ Rails.application.routes.draw do
         resources :friends, only: [:index]
         resources :pending_friends, only: [:index]
         resources :requested_friends, only: [:index]
+        resources :event, only: [:update, :destroy]
+        post '/event/:id', to: 'event#create'
       end
 
       # User Login
