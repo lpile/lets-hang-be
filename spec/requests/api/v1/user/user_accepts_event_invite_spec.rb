@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'User Event Accept Create', type: :request do
+describe 'User Event Accept Update', type: :request do
 
   let(:content_type) { {'Content-Type': 'application/json', 'Accept': 'application/json'} }
   let(:user1) { create(:user) }
