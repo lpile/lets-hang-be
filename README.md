@@ -673,14 +673,14 @@ body:
 status: 404
 body:
 {
-  "error"=>"Failed to find user"
+  "error": "Failed to find user"
 }
 ```
 ```
 status: 404
 body:
 {
-  "error"=>"Failed to find friend"
+  "error": "Failed to find friend"
 }
 ```
 #### Accept friend request
@@ -719,14 +719,14 @@ body:
 status: 404
 body:
 {
-  "error"=>"Failed to find user"
+  "error": "Failed to find user"
 }
 ```
 ```
 status: 404
 body:
 {
-  "error"=>"Failed to find requesting friend"
+  "error": "Failed to find requesting user"
 }
 ```
 
@@ -747,13 +747,13 @@ status: 204
 status: 404
 body:
 {
-  "error"=>"Failed to find user"
+  "error": "Failed to find user"
 }
 ```
 ```
 status: 404
 body:
 {
-  "error"=>"Failed to find requesting friend"
+  "error": "Failed to find requesting user"
 }
 ```
