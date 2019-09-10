@@ -10,7 +10,8 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     user = User.find_by(api_key: params[:api_key])
-    if user
+
+    if user && user.id == params[:id].to_i
       user.update(user_params)
       if user.save
         render json: UserSerializer.new(user), status: 202
