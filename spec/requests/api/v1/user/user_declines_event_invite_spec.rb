@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'User Event Accept Update', type: :request do
+describe 'User Event Decline Destroy', type: :request do
 
   let(:content_type) { {'Content-Type': 'application/json', 'Accept': 'application/json'} }
   let(:user1) { create(:user) }
@@ -11,7 +11,7 @@ describe 'User Event Accept Update', type: :request do
     UserEvent.create!(user: user1, event: event, status: :accepted)
     UserEvent.create!(user: user2, event: event, status: :pending)
 
-    patch "/api/v1/user/event/#{event.id}?api_key=#{user2.api_key}", headers: content_type
+    delete "/api/v1/user/event/#{event.id}?api_key=#{user2.api_key}", headers: content_type
 
     expect(response).to have_http_status(202)
 
@@ -35,14 +35,20 @@ describe 'User Event Accept Update', type: :request do
     expect(result['data']['attributes']['declined'].class).to be(Array)
     # Checks the count of event's user status
     expect(result['data']['attributes']['invited'].count).to eq(0)
-    expect(result['data']['attributes']['accepted'].count).to eq(2)
-    expect(result['data']['attributes']['declined'].count).to eq(0)
-    # Checks the first accepted user's keys
+    expect(result['data']['attributes']['accepted'].count).to eq(1)
+    expect(result['data']['attributes']['declined'].count).to eq(1)
+    # Checks the accepted user's keys
     expect(result['data']['attributes']['accepted'].first).to have_key('id')
     expect(result['data']['attributes']['accepted'].first).to have_key('name')
-    # Checks the last accepted user's values
-    expect(result['data']['attributes']['accepted'].last).to have_value(user2.id)
-    expect(result['data']['attributes']['accepted'].last).to have_value(user2.first_name + ' ' + user2.last_name)
+    # Checks the accepted user's values
+    expect(result['data']['attributes']['accepted'].last).to have_value(user1.id)
+    expect(result['data']['attributes']['accepted'].last).to have_value(user1.first_name + ' ' + user1.last_name)
+    # # Checks the declined user's keys
+    expect(result['data']['attributes']['declined'].first).to have_key('id')
+    expect(result['data']['attributes']['declined'].first).to have_key('name')
+    # Checks the declined user's values
+    expect(result['data']['attributes']['declined'].last).to have_value(user2.id)
+    expect(result['data']['attributes']['declined'].last).to have_value(user2.first_name + ' ' + user2.last_name)
     # Checks if all users where invited to event was successfully added to UserEvent table
     expect(user_events.count).to eq(2)
     expect(user_events[0].user_id).to eq(user1.id)
@@ -50,11 +56,11 @@ describe 'User Event Accept Update', type: :request do
     expect(user_events[0].event_id).to eq(event.id)
     expect(user_events[1].event_id).to eq(event.id)
     expect(user_events[0].status).to eq('accepted')
-    expect(user_events[1].status).to eq('accepted')
+    expect(user_events[1].status).to eq('declined')
   end
 
   it 'returns json error message if user cannot be found' do
-    patch "/api/v1/user/event/#{event.id}?api_key=fakeyfakebadAp1", headers: content_type
+    delete "/api/v1/user/event/#{event.id}?api_key=fakeyfakebadAp1", headers: content_type
 
     expect(response).to have_http_status(404)
 
@@ -65,7 +71,7 @@ describe 'User Event Accept Update', type: :request do
   end
 
   it 'returns json error message if event cannot be found' do
-    patch "/api/v1/user/event/2A?api_key=#{user2.api_key}", headers: content_type
+    delete "/api/v1/user/event/2A?api_key=#{user2.api_key}", headers: content_type
 
     expect(response).to have_http_status(404)
 
