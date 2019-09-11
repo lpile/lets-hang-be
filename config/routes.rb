@@ -18,6 +18,7 @@ Rails.application.routes.draw do
         resources :requested_friends, only: [:index]
         resources :event, only: [:update, :destroy]
         post '/event/:id', to: 'event#create'
+        get '/search', to: 'search#show'
       end
 
       # User Login

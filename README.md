@@ -7,6 +7,7 @@ Table of Contents
   * [Update An User](#update-an-user)
   * [Get All Events Associated With User](#get-all-events-associated-with-user)
   * [Get All Friends Associated With User](#get-all-friends-associated-with-user)
+  * [User Can Search For Friend](#user-can-search-for-friend)
 
 ##### [Event Endpoints](#event-endpoints)
   * [Create An Event](#create-an-event)
@@ -182,7 +183,7 @@ Get All Friends Associated With User
 ------------------------------------
 **Request**
 ```
-GET https://lets-hang-be.herokuapp.comapi/vi/user/friends
+GET https://lets-hang-be.herokuapp.com/api/vi/user/friends
 ```
 **Parameters**
 ```
@@ -231,6 +232,32 @@ api_key=<USER_API_KEY>
 
 ** Note: Pending friend is when the current user request another user to be friends **
 ** Note: Requested friend is when another user requests the current user to be friends **
+```
+
+User Can Search For Friend
+--------------------------
+**Request**
+```
+GET https://lets-hang-be.herokuapp.com/api/v1/user/search
+```
+**Parameters**
+```
+api_key=<USER_API_KEY>
+query=<string of friend's name>
+```
+**Response Body**
+```
+{
+  "data": {
+    "id": "10",
+    "type": "search_friend",
+    "attributes": {
+      "name": "User 2",
+      "phone_number": "2222222222",
+      "email": "User2@email.com"
+    }
+  }
+}
 ```
 
 Event Endpoints
