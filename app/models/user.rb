@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :pending_friends, -> { where friendships: { status: :pending } }, through: :friendships, source: :friend
 
   # Validates model attributes
-  validates :email, uniqueness: true, presence: true
+  validates :email, uniqueness: { case_sensitive: false }, presence: true
   validates_presence_of :first_name, :last_name, :phone_number, require: true
 
   # For Bcrypt to hash user's password
