@@ -10,13 +10,15 @@ Rails.application.routes.draw do
       # All friendships
       resources :friendships, only: [:create, :update, :destroy]
 
-      # User Events - invite, accept, decline
-      resources :user_events, only: [:create, :update, :destroy]
-
       # Specific User
       namespace :user do
         resources :events, only: [:index]
         resources :friends, only: [:index]
+        resources :pending_friends, only: [:index]
+        resources :requested_friends, only: [:index]
+        resources :event, only: [:update, :destroy]
+        post '/event/:id', to: 'event#create'
+        get '/search', to: 'search#show'
       end
 
       # User Login

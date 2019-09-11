@@ -6,72 +6,56 @@ Friendship.destroy_all
 User.destroy_all
 Event.destroy_all
 
-user1, user2, user3, user4, user5, user6 = create_list(:user, 6)
+user1 = User.create!(first_name: 'User', last_name: '1', phone_number: '1111111111', email: 'User1@email.com', password: 'password', password_confirmation: 'password')
+user2 = User.create!(first_name: 'User', last_name: '2', phone_number: '2222222222', email: 'User2@email.com', password: 'password', password_confirmation: 'password')
+user3 = User.create!(first_name: 'User', last_name: '3', phone_number: '3333333333', email: 'User3@email.com', password: 'password', password_confirmation: 'password')
+user4 = User.create!(first_name: 'User', last_name: '4', phone_number: '4444444444', email: 'User4@email.com', password: 'password', password_confirmation: 'password')
+user5 = User.create!(first_name: 'User', last_name: '5', phone_number: '5555555555', email: 'User5@email.com', password: 'password', password_confirmation: 'password')
+user6 = User.create!(first_name: 'User', last_name: '6', phone_number: '6666666666', email: 'User6@email.com', password: 'password', password_confirmation: 'password')
+user7 = User.create!(first_name: 'User', last_name: '7', phone_number: '7777777777', email: 'User7@email.com', password: 'password', password_confirmation: 'password')
+user8 = User.create!(first_name: 'User', last_name: '8', phone_number: '8888888888', email: 'User8@email.com', password: 'password', password_confirmation: 'password')
 
 # User 1 creates 3 events
-event1, event2, event3 = create_list(:event, 3, creator: user1.first_name + ' ' + user1.last_name)
+event1 = Event.create!(title: 'Event 1', description: 'description', event_time: 'whenever', event_location: 'Denver, CO', creator: "#{user1.first_name} #{user1.last_name}")
+event2 = Event.create!(title: 'Event 2', description: 'description', event_time: 'whenever', event_location: 'Denver, CO', creator: "#{user1.first_name} #{user1.last_name}")
+event3 = Event.create!(title: 'Event 3', description: 'description', event_time: 'whenever', event_location: 'Denver, CO', creator: "#{user1.first_name} #{user1.last_name}")
 # User 2 creates 2 events
-event4, event5 = create_list(:event, 2, creator: user2.first_name + ' ' + user2.last_name)
-# User 3 creates 1 event
-event6 = create(:event, creator: user3.first_name + ' ' + user3.last_name)
-# User 4 creates 3 events
-event7, event8, event9 = create_list(:event, 3, creator: user4.first_name + ' ' + user4.last_name)
-# User 5 creates 1 event
-event10 = create(:event, creator: user5.first_name + ' ' + user5.last_name)
+event4 = Event.create!(title: 'Event 4', description: 'description', event_time: 'whenever', event_location: 'Denver, CO', creator: "#{user2.first_name} #{user2.last_name}")
+event5 = Event.create!(title: 'Event 5', description: 'description', event_time: 'whenever', event_location: 'Denver, CO', creator: "#{user2.first_name} #{user2.last_name}")
 
-# User 1 creates event 1 and adds friends user 2 and user 3
-UserEvent.create!(user: user1, event: event1)
-UserEvent.create!(user: user2, event: event1)
-UserEvent.create!(user: user3, event: event1)
-# User 1 creates event 2 and adds friend user 2
-UserEvent.create!(user: user1, event: event2)
-UserEvent.create!(user: user2, event: event2)
-# User 1 creates event 3 and adds friend user 3
-UserEvent.create!(user: user1, event: event3)
-UserEvent.create!(user: user3, event: event3)
-# User 2 creates event 4 and adds no friends
-UserEvent.create!(user: user2, event: event4)
-# User 2 creates event 5 and adds friend user 1
-UserEvent.create!(user: user2, event: event5)
-UserEvent.create!(user: user1, event: event5)
-# User 3 creates event 6 and adds friend user 1
-UserEvent.create!(user: user3, event: event6)
-UserEvent.create!(user: user1, event: event6)
-# User 4 creates event 7 and adds friends user 1 and user 5
-UserEvent.create!(user: user4, event: event7)
-UserEvent.create!(user: user1, event: event7)
-UserEvent.create!(user: user5, event: event7)
-# User 4 creates event 8 and adds no friends
-UserEvent.create!(user: user4, event: event8)
-# User 4 creates event 9 and adds friend user 2
-UserEvent.create!(user: user4, event: event9)
-UserEvent.create!(user: user2, event: event9)
-# User 5 creates event 10 and adds friend user 1 and user 4
-UserEvent.create!(user: user5, event: event10)
-UserEvent.create!(user: user1, event: event10)
-UserEvent.create!(user: user4, event: event10)
-
-# User 1 is friends with user 2, user 3, user 4, and user 5
-Friendship.create!(user: user1, friend: user2, status: :accepted)
-Friendship.create!(user: user1, friend: user3, status: :accepted)
-Friendship.create!(user: user1, friend: user4, status: :accepted)
-Friendship.create!(user: user1, friend: user5, status: :accepted)
-# User 2 is friends with user 1 and user 4
-Friendship.create!(user: user2, friend: user1, status: :accepted)
-Friendship.create!(user: user2, friend: user4, status: :accepted)
-# User 3 is friends with user 1
-Friendship.create!(user: user3, friend: user1, status: :accepted)
-# User 4 is friends with user 1, user 2, and user 5
-Friendship.create!(user: user4, friend: user1, status: :accepted)
-Friendship.create!(user: user4, friend: user2, status: :accepted)
-Friendship.create!(user: user4, friend: user5, status: :accepted)
-# User 5 is friends with user 1 and user 4
-Friendship.create!(user: user5, friend: user1, status: :accepted)
-Friendship.create!(user: user5, friend: user4, status: :accepted)
-
-
+# User 1 is friends with Users 2,3,4
+# User 1 has pending friends of Users 5 and 6
+# User 1 is a requested friend from Users 7 and 8
+# User 8 has no accepted friends
+# User 8 has pending friends of Users 1,2,3
+# User 8 is a requested friend from Users 4,5,6
+user1.friend_request(user2)
+user2.accept_request(user1)
+user1.friend_request(user3)
+user3.accept_request(user1)
+user1.friend_request(user4)
+user4.accept_request(user1)
+user1.friend_request(user5)
 user1.friend_request(user6)
-user6.friend_request(user2)
-user3.friend_request(user4)
-user3.friend_request(user5)
-user3.friend_request(user6)
+user7.friend_request(user1)
+user8.friend_request(user1)
+user8.friend_request(user2)
+user8.friend_request(user3)
+user4.friend_request(user8)
+user5.friend_request(user8)
+user6.friend_request(user8)
+
+# Event 1 has users 1 and 2 attending, user 3 is pending, user 4 has declined
+# Event 2 only has user 1 attending
+# Event 3 has user 1 attending, user 3 is pending, user 5 has declined
+# Event 4 and 5 has only user 2 attending
+UserEvent.create!(user: user1, event: event1, status: :accepted)
+UserEvent.create!(user: user2, event: event1, status: :accepted)
+UserEvent.create!(user: user3, event: event1, status: :pending)
+UserEvent.create!(user: user4, event: event1, status: :declined)
+UserEvent.create!(user: user1, event: event2, status: :accepted)
+UserEvent.create!(user: user1, event: event3, status: :accepted)
+UserEvent.create!(user: user3, event: event3, status: :pending)
+UserEvent.create!(user: user5, event: event3, status: :declined)
+UserEvent.create!(user: user2, event: event4, status: :accepted)
+UserEvent.create!(user: user2, event: event5, status: :accepted)

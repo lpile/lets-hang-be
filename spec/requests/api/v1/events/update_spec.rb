@@ -6,7 +6,7 @@ describe 'Event Update', type: :request do
   let(:event) { create(:event, creator: "#{user.first_name} #{user.last_name}") }
 
   it 'returns json updated event information' do
-    body = {'title': 'Update', 'description': 'Update', 'event_time': DateTime.current, 'event_location': 'Update'}
+    body = {'title': 'Update', 'description': 'Update', 'event_time': 'Update', 'event_location': 'Update'}
 
     patch "/api/v1/events/#{event.id}?api_key=#{user.api_key}", params: body.to_json, headers: content_type
 
@@ -27,18 +27,18 @@ describe 'Event Update', type: :request do
     # Checks response has correct data
     expect(result['data']['attributes']['title']).to eq(event_output.title)
     expect(result['data']['attributes']['description']).to eq(event_output.description)
-    expect(result['data']['attributes']['event_time']).to eq(Time.at(event_output.event_time).strftime('%I:%M%p %m/%d/%y'))
+    expect(result['data']['attributes']['event_time']).to eq('Update')
     expect(result['data']['attributes']['event_location']).to eq(event_output.event_location)
     expect(result['data']['attributes']['creator']).to eq(event_output.creator)
     # Checks if event was successful updated to Event table
     expect(event_output.title).to_not eq(event[:title])
     expect(event_output.description).to_not eq(event[:description])
-    expect(Time.at(event_output.event_time).strftime('%I:%M%p %m/%d/%y')).to_not eq(Time.at(event[:event_time]).strftime('%I:%M%p %m/%d/%y'))
+    expect(event_output.event_time).to_not eq('whenever')
     expect(event_output.event_location).to_not eq(event[:event_location])
   end
 
   it 'returns json error message if user cannot be found' do
-    body = {'title': 'Update', 'description': 'Update', 'event_time': DateTime.current, 'event_location': 'Update'}
+    body = {'title': 'Update', 'description': 'Update', 'event_time': 'update time', 'event_location': 'Update'}
 
     patch "/api/v1/events/#{event.id}?api_key=ksh5q!jksdj", params: body.to_json, headers: content_type
 
@@ -55,7 +55,7 @@ describe 'Event Update', type: :request do
     another_user = create(:user, first_name: 'Someone', last_name: 'Else')
     event2 = create(:event, creator: "#{another_user.first_name} #{another_user.last_name}")
 
-    body = {'title': 'Update', 'description': 'Update', 'event_time': DateTime.current, 'event_location': 'Update'}
+    body = {'title': 'Update', 'description': 'Update', 'event_time': 'update time', 'event_location': 'Update'}
 
     patch "/api/v1/events/#{event2.id}?api_key=#{user.api_key}", params: body.to_json, headers: content_type
 
@@ -82,7 +82,7 @@ describe 'Event Update', type: :request do
     # Checks if user was successful updated to User table
     expect(event_output.title).to_not eq(event[:title])
     expect(event_output.description).to eq(event[:description])
-    expect(Time.at(event_output.event_time).strftime('%I:%M%p %m/%d/%y')).to eq(Time.at(event[:event_time]).strftime('%I:%M%p %m/%d/%y'))
+    expect(event_output.event_time).to eq('whenever')
     expect(event_output.event_location).to eq(event[:event_location])
   end
 end

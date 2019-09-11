@@ -19,7 +19,7 @@ class Api::V1::EventsController < ApplicationController
       event = Event.new(event_params)
       event.creator = "#{user.first_name} #{user.last_name}"
       if event.save
-        UserEvent.create(user: user, event: event)
+        UserEvent.create(user: user, event: event, status: :accepted)
         render json: EventSerializer.new(event), status: 201
       else
         render json: { error: 'Failed to create event'}, status: 422
