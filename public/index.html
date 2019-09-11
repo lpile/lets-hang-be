@@ -2,58 +2,306 @@
 <html>
   <head>
       <style>
-          body {background-color: antiquewhite;}
+          body {background-color: #fff; font-family: Arial, sans-serif; font-size: 1em;}
           h1   {color: green;}
           h3   {color: blue;}
-          table {border: 1px solid blue;}
+          table {border: .5px solid blue; height: 400px; width: 95%; text-align: center}
+          tr {border: .5px solid blue; min-height: 40px;}
+          td { border: .5px solid blue; min-width: 150px; }
+          th { height: 40px;}
           </style>
   </head>
 <body>
 
 <h1>Welcome To Lets Hang API</h1>
 
-<h3>Requests Information</h3>
+<h3>Base URL:  https://lets-hang-be.herokuapp.com</h3>
 
-<table style="width:90%;height: 500px">
+<h3>User Request Information</h3>
+
+<table>
   <tr>
-    <th>Method</th>
+    <th>Goal</th>
     <th>Path</th>
+    <th>Method</th>
     <th>Params</th> 
+    <th>Body</th> 
     <th>Response</th>
+    <th>Errors</th>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Get All Users</td>
+    <td>/api/v1/users</td>
+    <td>POST</td>
+    <td>NONE</td>
+    <td>
+        <code>{
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "phone_number": "9999999999",
+        "email": "FirstLast@email.com",
+        "password": "password",
+        "password_confirmation": "password"} 
+    </code>
+    </td>
+    <td><code>
+      {
+        "data": {
+          "id": "1",
+          "type": "user",
+          "attributes": {
+            "first_name": "First Name",
+            "last_name": "Last Name",
+            "phone_number": "9999999999",
+            "email": "FirstLast@email.com",
+            "api_key": "8d5340cf0f6edca1f69d"
+          }
+        }
+      }
+    </code>
+    </td>
+    <td>404</td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Update A User</td>
+    <td>/api/v1/users/{USER_ID}</td>
+    <td>PATCH</td>
+    <td><code>api_key={USER_API_KEY}</code></td>
+    <td><code>{
+        "first_name": "Update Name",
+        "last_name": "Update Name",
+        "phone_number": "3333333333",
+        "email": "Update@email.com"
+      }</code></td>
+    <td><code>{
+        "data":
+        {
+          "type": "user",
+          "id": "1",
+          "attributes":
+          {
+            "first_name": "Update Name",
+            "last_name": "Update Name",
+            "phone_number": "3333333333",
+            "email": "Update@email.com",
+            "api_key": "L4sw!sdg?KE364"
+          }
+        }
+      }
+    </code></td>
+    <td>404, 422</td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>Login A User</td>
+    <td>/api/v1/sessions</td>
+    <td>POST</td>
+    <td>NONE</td>
+    <td><code>
+      {
+        "email": "FirstLast@email.com",
+        "password": "password"
+      }
+    </code></td>
+    <td><code>
+        {
+          "data": {
+            "id": "1",
+            "type": "user",
+            "attributes": {
+              "first_name": "First Name",
+              "last_name": "Last Name",
+              "phone_number": "9999999999",
+              "email": "FirstLast@email.com",
+              "api_key": "8d5340cf0f6edca1f69d"
+            }
+          }
+        }
+      </code></td>
+    <td>404</td>
+  </tr>
+  <tr>
+    <td>Search For a User</td>
+    <td>/api/v1/user/search</td>
+    <td>GET</td>
+    <td><code>api_key={USER_API_KEY}
+        query=string of friend name
+      </code></td>
+    <td>NONE</td>
+    <td><code>{
+        "data": {
+          "id": "10",
+          "type": "search_friend",
+          "attributes": {
+            "name": "User 2",
+            "phone_number": "2222222222",
+            "email": "User2@email.com"
+          }
+        }
+      }</code></td>
+    <td>404</td>
+  </tr>
+    <tr>
+    <td>Get All Friends of a User</td>
+    <td>/api/vi/user/events</td>
+    <td>GET</td>
+    <td>api_key={USER_API_KEY}</td>
+    <td>NONE</td>
+    <td><code>{
+        "data": {
+          "id": "1",
+          "type": "user",
+          "attributes": {
+            "accepted_friends": [
+              {
+                "id": 2,
+                "name": "User 2",
+                "phone_number": "2222222222",
+                "email": "User2@email.com"
+              },
+              {
+                "id": 3,
+                "name": "User 3",
+                "phone_number": "3333333333",
+                "email": "User3@email.com"
+              }
+            ],
+            "pending_friends": [
+              {
+                "id": 4,
+                "name": "User 4",
+                "phone_number": "4444444444",
+                "email": "User4@email.com"
+              }
+            ],
+            "requested_friends": [
+              {
+                "id": 5,
+                "name": "User 5",
+                "phone_number": "5555555555",
+                "email": "User5@email.com"
+              }
+            ]
+          }
+        }
+      }</code></td>
+    <td>404</td>
+    </tr>
+  <tr>
+    <td>Get All Events of a User</td>
+    <td>/api/v1/user/friends</td>
+    <td>GET</td>
+    <td>api_key={USER_API_KEY}</td>
+    <td>NONE</td>
+    <td><code>{
+        "data": {
+          "id": "1",
+          "type": "user",
+          "attributes": {
+            "events": [
+              {
+                "id": 1,
+                "title": "Event 1",
+                "description": "description",
+                "event_time": "whenever",
+                "event_location": "Denver, CO",
+                "creator": "User 1"
+              },
+              {
+                "id": 2,
+                "title": "Event 2",
+                "description": "description",
+                "event_time": "Tonight at 9pm",
+                "event_location": "Denver, CO",
+                "creator": "User 1"
+              },
+              {
+                "id": 3,
+                "title": "Event 3",
+                "description": "description",
+                "event_time": "Right now",
+                "event_location": "Denver, CO",
+                "creator": "User 2"
+              }
+            ]
+          }
+        }
+      }</code></td>
+    <td>404</td>
   </tr>
 </table>
 
+<h3>Friendship Requests</h3>
 
-<h3>User Requests</h3>
-
-
-
+<table >
+    <tr>
+      <th>Goal</th>
+      <th>Path</th>
+      <th>Method</th>
+      <th>Params</th> 
+      <th>Response</th>
+      <th>Errors</th>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
 
 <h3>Events Requests</h3>
 
-
-
-<h3>Friendship Requests</h3>
-
-
-
+<table>
+    <tr>
+      <th>Goal</th>
+      <th>Path</th>
+      <th>Method</th>
+      <th>Params</th> 
+      <th>Response</th>
+      <th>Errors</th>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
 </body>
 </html>
