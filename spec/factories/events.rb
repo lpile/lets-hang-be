@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :event do
-    title { Faker::Beer.style }
+    title { Faker::TvShows::MichaelScott.quote }
     description { Faker::ChuckNorris.fact }
     event_time { 'whenever' }
-    creator { Faker::Games::Pokemon.name }
-    event_location { Faker::Beer.name }
+    creator { Faker::TvShows::GameOfThrones.character }
+    event_location { Faker::TvShows::GameOfThrones.city }
   end
 end
