@@ -1,6 +1,6 @@
 Lets Hang API
 =============
-
+[![Build Status](https://travis-ci.org/lpile/lets-hang-be.svg?branch=master)](https://travis-ci.org/lpile/lets-hang-be)
 Welcome to Lets Hang API! This is an API that serves as the backend for _Lets-Hang_, built by [Anneke McGrady](https://github.com/annekemcgrady/) and [Logan Pile](https://github.com/lpile/). The _Lets-Hang_ frontend is viewable on GitHub [here](https://github.com/kaylalarson1990/Lets-Hang), built by [Ryan Flachman](https://github.com/flachman03) and [Kayla Larson](https://github.com/kaylalarson1990).
 
 [Deployed Site](https://lets-hang-be.herokuapp.com/)
