@@ -1,6 +1,14 @@
+Lets Hang API
+=============
+[![Build Status](https://travis-ci.org/lpile/lets-hang-be.svg?branch=master)](https://travis-ci.org/lpile/lets-hang-be)
+Welcome to Lets Hang API! This is an API that serves as the backend for _Lets-Hang_, built by [Anneke McGrady](https://github.com/annekemcgrady/) and [Logan Pile](https://github.com/lpile/). The _Lets-Hang_ frontend is viewable on GitHub [here](https://github.com/kaylalarson1990/Lets-Hang), built by [Ryan Flachman](https://github.com/flachman03) and [Kayla Larson](https://github.com/kaylalarson1990).
+
+[Deployed Site](https://lets-hang-be.herokuapp.com/)
+
 Table of Contents
 =================
-
+##### [Schema](#schema)
+##### [About](#about)
 ##### [User Endpoints](#user-endpoints)
   * [Create An User](#create-an-user)
   * [Login An User](#login-an-user)
@@ -22,6 +30,19 @@ Table of Contents
   * [Accept Friend Request](#accept-friend-request)
   * [Decline Friend Request Or Remove Friend](#decline-friend-request-or-remove-friend)
 
+##### [Local Installation](#local-installation)
+  * [Requirements](#requirements)
+  * [Setup](#setup)
+  * [Testing](#testing)
+
+
+About
+=====
+Finding friends who wants to hang out in the moment can be hard for someone with a busy schedule. Well Lets-Hang allows people to schedule events in real time and add any of your friends to your created events.
+
+Schema
+======
+![Lets Hang API Schema](/public/schema.png)
 
 User Endpoints
 ==============
@@ -623,3 +644,27 @@ api_key=<USER_API_KEY>
 ```
 status: 204
 ```
+
+Local Installation
+==================
+
+Requirements
+------------
+
+* [Rails 5.2.3](https://rubyonrails.org/) - Rails Version
+* [Ruby 2.4.1](https://www.ruby-lang.org/en/downloads/) - Ruby Version
+
+Setup
+-----
+
+```
+$ git clone git@github.com:lpile/lets-hang-be.git
+$ cd lets-hang-be
+$ bundle install
+$ rails db:{create,migrate,seed}
+```
+
+Testing
+-------
+
+The full test suite can be run with `$ bundle exec rspec`.
