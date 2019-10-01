@@ -23,6 +23,10 @@ Rails.application.routes.draw do
 
       # User Login
       post '/sessions', to: 'sessions#create'
+
+      mount ActionCable.server => '/cable'
+
+      resources :messages
     end
   end
 end
