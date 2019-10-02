@@ -190,7 +190,7 @@
     </tr>
   <tr>
     <td>Get All Events of a User</td>
-    <td>/api/v1/user/friends</td>
+    <td>/api/v1/user/events</td>
     <td>GET</td>
     <td><code>api_key={USER_API_KEY}</code></td>
     <td>NONE</td>
@@ -206,7 +206,8 @@
                 "description": "description",
                 "event_time": "whenever",
                 "event_location": "Denver, CO",
-                "creator": "User 1"
+                "creator": "User 1",
+                "attending": ["User 1", "Bob Jones", "Jane Doe"]
               },
               {
                 "id": 2,
@@ -214,7 +215,8 @@
                 "description": "description",
                 "event_time": "Tonight at 9pm",
                 "event_location": "Denver, CO",
-                "creator": "User 1"
+                "creator": "User 1",
+                "attending": ["User 1", "Ryan Flachman", "Kayla Larson"]
               },
               {
                 "id": 3,
@@ -222,7 +224,8 @@
                 "description": "description",
                 "event_time": "Right now",
                 "event_location": "Denver, CO",
-                "creator": "User 2"
+                "creator": "User 2",
+                "attending": ["User 2"]
               }
             ]
           }
