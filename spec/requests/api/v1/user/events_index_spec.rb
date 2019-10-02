@@ -8,9 +8,9 @@ describe 'User Events Index', type: :request do
   it 'returns json array of user event objects' do
     event1, event2, event3 = create_list(:event, 3)
 
-    UserEvent.create!(user: user, event: event1)
-    UserEvent.create!(user: user, event: event2)
-    UserEvent.create!(user: user, event: event3)
+    UserEvent.create!(user: user, event: event1, status: :accepted)
+    UserEvent.create!(user: user, event: event2, status: :accepted)
+    UserEvent.create!(user: user, event: event3, status: :accepted)
 
     get "/api/v1/user/events?api_key=#{user.api_key}", headers: content_type
 
@@ -35,12 +35,14 @@ describe 'User Events Index', type: :request do
     expect(result['data']['attributes']['events'].first).to have_key('event_time')
     expect(result['data']['attributes']['events'].first).to have_key('creator')
     expect(result['data']['attributes']['events'].first).to have_key('event_location')
+    expect(result['data']['attributes']['events'].first).to have_key('attending')
     # Checks the last event's values
     expect(result['data']['attributes']['events'].last).to have_value(event3.title)
     expect(result['data']['attributes']['events'].last).to have_value(event3.description)
     expect(result['data']['attributes']['events'].last).to have_value('whenever')
     expect(result['data']['attributes']['events'].last).to have_value(event3.creator)
     expect(result['data']['attributes']['events'].last).to have_value(event3.event_location)
+    expect(result['data']['attributes']['events'].last).to have_value([user.first_name + ' ' + user.last_name])
   end
 
   it 'returns json empty array if user has no events' do
@@ -62,5 +64,21 @@ describe 'User Events Index', type: :request do
 
     expect(result).to have_key('error')
     expect(result['error']).to eq('Failed to find user')
+  end
+
+  it 'returns an array of users who have accepted the event' do
+    users = create_list(:user, 3)
+    event = create(:event)
+    UserEvent.create!(user: users[0], event: event, status: :accepted)
+    UserEvent.create!(user: users[1], event: event, status: :accepted)
+    UserEvent.create!(user: users[2], event: event, status: :accepted)
+
+
+    get "/api/v1/user/events?api_key=#{users[0].api_key}", headers: content_type
+
+    result = JSON.parse(response.body)
+
+    expect(result['data']['attributes']['events'].first['attending'].first).to eq(users[0].first_name + ' ' + users[0].last_name)
+
   end
 end
