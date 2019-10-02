@@ -177,7 +177,8 @@ api_key=<USER_API_KEY>
           "description": "description",
           "event_time": "whenever",
           "event_location": "Denver, CO",
-          "creator": "User 1"
+          "creator": "User 1",
+          "attending": ["User 1", "Bob Jones", "Jane Doe", "Ryan Flachman"]
         },
         {
           "id": 2,
@@ -185,7 +186,8 @@ api_key=<USER_API_KEY>
           "description": "description",
           "event_time": "Tonight at 9pm",
           "event_location": "Denver, CO",
-          "creator": "User 1"
+          "creator": "User 1",
+          "attending": ["User 1"]
         },
         {
           "id": 3,
@@ -193,7 +195,8 @@ api_key=<USER_API_KEY>
           "description": "description",
           "event_time": "Right now",
           "event_location": "Denver, CO",
-          "creator": "User 2"
+          "creator": "User 2",
+          "attending": ["User 2", "Logan Pile"]
         }
       ]
     }

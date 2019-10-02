@@ -35,8 +35,8 @@ describe 'Events Show', type: :request do
   end
 
   it 'returns json information of attendees of only creator if no other user attends event' do
-    UserEvent.create!(user: user1, event: event)
-
+    UserEvent.create!(user: user1, event: event, status: :accepted)
+    
     get "/api/v1/events/#{event.id}?api_key=#{user1.api_key}", headers: content_type
 
     expect(response).to be_successful
@@ -44,8 +44,8 @@ describe 'Events Show', type: :request do
     result = JSON.parse(response.body)
 
     # Checks response has correct data
-    # expect(result['data']['attributes']['attendees'].count).to eq(1)
-    # expect(result['data']['attributes']['attendees'].first).to eq("#{user1.first_name} #{user1.last_name}")
+    expect(result['data']['attributes']['accepted'].count).to eq(1)
+    expect(result['data']['attributes']['accepted'].first['name']).to include("#{user1.first_name} #{user1.last_name}") 
   end
 
   it 'returns json error message if no user is found' do
