@@ -13,7 +13,7 @@ user4 = create(:user, first_name: 'Kayla', last_name: 'Larson', email: 'kayla@em
 user5, user6, user7, user8, user9 = create_list(:user, 5)
 event1 = create(:event, title: 'HAPPY HOUR', event_time: 'After school', creator: user2.first_name + ' ' + user2.last_name)
 event2 = create(:event, title: 'Dinner', event_time: '6pm', creator: user2.first_name + ' ' + user2.last_name)
-event3 = create(:event, title: 'Go for a bike ride', event_time: 'whenever', creator: user3.first_name + ' ' + user3.last_name)
+event3 = create(:event, title: 'Go for a bike ride', event_time: 'whenever', creator: user1.first_name + ' ' + user1.last_name)
 
 user1.friend_request(user2)
 user2.accept_request(user1)
